@@ -55,14 +55,15 @@ console.log('extendedrecipe',details.extendedIngredients);
         {/* issues extended Ingredient html not working on tab */}
         
         {activeTab === "ingredients" && (
-          <div>
+          
           <ul>
-          {details.extendedIngredients.map((ingredient)=>{
+          { details.extendedIngredients.map((ingredient)=>{
             console.log("log",ingredient.original);
             <li key={ingredient.id}>{ingredient.original}</li>
           })}
           </ul>
-          </div>
+        
+          
         )}
       </Info>
     </DetailWrapper>
