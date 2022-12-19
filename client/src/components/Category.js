@@ -6,7 +6,6 @@ import {NavLink} from "react-router-dom";
 function Category() {
   return (
     <List>
-
         <SLink to={'/cuisine/Indian'}>
             <GiHotSpices/>
             <h4>Indian</h4>

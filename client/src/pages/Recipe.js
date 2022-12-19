@@ -14,13 +14,18 @@ function Recipe() {
     if(check){
        setDetails(JSON.parse(check))
     }else{    
-    const key = '177c68ef76bc74460a33a631b601f508c';
-    const key1 = '06c9ecde46f0fda28f044c48fe6a75aa19aa6f92';
-
-    const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${key}`);
-    const detailData = await data.json();
-    localStorage.setItem('recipe',JSON.stringify(detailData))
-    setDetails(detailData);
+      try {
+        const key = '77c68ef76bc74460a33a631b601f508c';
+        const key1 = '06c9ecde46f0fda28f044c48fe6a75aa19aa6f92';
+        const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${key}`);
+        const detailData = await data.json();
+        localStorage.setItem('recipe',JSON.stringify(detailData))
+        setDetails(detailData);
+      } catch (error) {
+        
+       console.log(error);
+        
+      }
     }
 }
 
@@ -43,27 +48,20 @@ console.log('extendedrecipe',details.extendedIngredients);
           <div>
             <h3 dangerouslySetInnerHTML={{__html: details.summary}}></h3>
             <h3 dangerouslySetInnerHTML={{__html: details.instructions}}></h3>
-          {/* <ul>
-          {details.extendedIngredients.map((ingredient)=>{
-            console.log("log",ingredient.original);
-            <li key={ingredient.id}>{ingredient.original}</li>
-          })}
-          </ul> */}
           </div>
         )}
         
         {/* issues extended Ingredient html not working on tab */}
         
         {activeTab === "ingredients" && (
-          
+
           <ul>
           { details.extendedIngredients.map((ingredient)=>{
             console.log("log",ingredient.original);
-            <li key={ingredient.id}>{ingredient.original}</li>
+            return  <li key={ingredient.id}>{ingredient.original}</li>
           })}
           </ul>
         
-          
         )}
       </Info>
     </DetailWrapper>
