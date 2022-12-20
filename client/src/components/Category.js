@@ -1,14 +1,34 @@
 import {FaPizzaSlice, FaHamburger } from "react-icons/fa";
-import {GiNoodles, GiChopsticks, GiHotSpices } from "react-icons/gi"
+import {GiNoodles, GiChopsticks, GiHotSpices, GiTacos, GiRawEgg, GiDumplingBao } from "react-icons/gi"
 import styled from "styled-components";
+import {Splide, SplideSlide} from "@splidejs/react-splide"
+import '@splidejs/splide/dist/css/splide.min.css'
 import {NavLink} from "react-router-dom";
 
 function Category() {
   return (
     <List>
+        {/* <Splide options={{
+            arrows: false,
+            perPage: 4,
+            drag: "free",
+            gap: '2rem'
+        }}> */}
         <SLink to={'/cuisine/Indian'}>
             <GiHotSpices/>
             <h4>Indian</h4>
+        </SLink>
+        <SLink to={'/cuisine/Mexican'}>
+            <GiTacos/>
+            <h4>Mexican</h4>
+        </SLink>
+        <SLink to={'/cuisine/French'}>
+            <GiRawEgg/>
+            <h4>French</h4>
+        </SLink>
+        <SLink to={'/cuisine/Korean'}>
+            <GiDumplingBao/>
+            <h4>Korean</h4>
         </SLink>
         <SLink to={'/cuisine/Italian'}>
             <FaPizzaSlice/>
@@ -26,6 +46,7 @@ function Category() {
             <GiChopsticks/>
             <h4>Japanese</h4>
         </SLink>
+        {/* </Splide> */}
     </List>
   )
 }

@@ -4,11 +4,12 @@ import { useParams } from "react-router-dom";
 import React from 'react'
 
 function Recipe() {
-
   let params = useParams();
 
   const [details, setDetails] = useState({});
+  const [html, setHtml] = useState({__html: ""})
   const [activeTab, setActiveTab] = useState("instructions")
+
   const fetchDetails = async()=>{
     const check = localStorage.getItem('recipe')
     if(check){
@@ -16,18 +17,38 @@ function Recipe() {
     }else{    
       try {
         const key = '77c68ef76bc74460a33a631b601f508c';
-        const key1 = '06c9ecde46f0fda28f044c48fe6a75aa19aa6f92';
         const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${key}`);
         const detailData = await data.json();
         localStorage.setItem('recipe',JSON.stringify(detailData))
         setDetails(detailData);
       } catch (error) {
-        
-       console.log(error);
-        
+        console.log(error);        
       }
     }
-}
+  }
+  
+  const fetchHtml = async()=>{
+    let check = localStorage.getItem('label');
+    if(check){
+      setHtml(JSON.parse(check))
+    }else{
+
+      try {
+        const key = '77c68ef76bc74460a33a631b601f508c';
+        //nutrition fetch
+        const nutritionLabel = await fetch(`https://api.spoonacular.com/recipes/${params.name}/nutritionLabel?apiKey=${key}`)
+        const labelData = await nutritionLabel.text();
+        localStorage.setItem('label',JSON.stringify(labelData))
+        return {__html: labelData}
+      } catch (error) {
+        console.log('labelerror',error);
+      }
+    }
+  }
+
+  useEffect(()=>{
+    fetchHtml().then(result => setHtml(result))
+  },[])
 
   useEffect(()=>{
     fetchDetails();
@@ -40,6 +61,8 @@ console.log('extendedrecipe',details.extendedIngredients);
       <div>
         <h2>{details.title}</h2>
         <img src={details.image} alt=""/>
+        <h2 className="label">Nutrition Label</h2>
+      <div dangerouslySetInnerHTML={html}/>
       </div>
       <Info>
         <Button className={activeTab === "instructions" ? "active": ""} onClick={()=>setActiveTab('instructions')}>Instructions</Button>
@@ -54,13 +77,14 @@ console.log('extendedrecipe',details.extendedIngredients);
         {/* issues extended Ingredient html not working on tab */}
         
         {activeTab === "ingredients" && (
-
-          <ul>
-          { details.extendedIngredients.map((ingredient)=>{
-            console.log("log",ingredient.original);
-            return  <li key={ingredient.id}>{ingredient.original}</li>
-          })}
-          </ul>
+          <div>
+            <ul>
+              { details.extendedIngredients.map((ingredient)=>{
+                console.log("log",ingredient.original);
+                return  <li key={ingredient.id}>{ingredient.original}</li>
+              })}
+            </ul>
+          </div>
         
         )}
       </Info>
