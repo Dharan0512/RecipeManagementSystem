@@ -49,7 +49,7 @@ const Card = styled.div`
         text-decoration: none;
     }
     h4{
-        text-algin: center;
+        text-align: center;
         padding: 1rem;
     }
 `;
