@@ -64,7 +64,6 @@ const FormStyle = styled.form`
 
     button{
       border: none;
-      padding: 1rem 2rem;
       margin: 1rem 0rem 1rem 5rem;
       border-radius: 5px;
       background: linear-gradient(35deg, #494949, #313131);
