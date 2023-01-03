@@ -27,7 +27,7 @@ function Search() {
         </div>
         <div>         
         </div>
-        <Button varient="outline">
+        <Button varient="primary" className='btn'>
           Filters
         </Button>
       </div>
@@ -61,17 +61,27 @@ const FormStyle = styled.form`
         transform: translate(100%, -50%);
         color: white;
     }
-
-    button{
+    
+    .btn{
+      box-shadow: none !important;
+      outline: none !important;
       border: none;
       margin: 1rem 0rem 1rem 5rem;
       border-radius: 5px;
       background: linear-gradient(35deg, #494949, #313131);
     }
 
-    button:active{
-      color: none;
-      outline: none;
+
+    button:hover{
+        background: linear-gradient(to right, #f27121, #e94057);
+        
+        svg{
+            color: white;
+        }
+
+        h4{
+            color: white
+        }
     }
 `
 

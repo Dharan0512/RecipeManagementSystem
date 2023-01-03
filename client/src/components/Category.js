@@ -1,7 +1,6 @@
 import {FaPizzaSlice, FaHamburger } from "react-icons/fa";
 import {GiNoodles, GiChopsticks, GiHotSpices, GiTacos, GiRawEgg, GiDumplingBao } from "react-icons/gi"
 import styled from "styled-components";
-import {Splide, SplideSlide} from "@splidejs/react-splide"
 import '@splidejs/splide/dist/css/splide.min.css'
 import {NavLink} from "react-router-dom";
 
@@ -79,6 +78,7 @@ const SLink = styled(NavLink)`
         color: white;
         font-size: 1.5rem;
     }
+
     &.active{
         background: linear-gradient(to right, #f27121, #e94057);
         
