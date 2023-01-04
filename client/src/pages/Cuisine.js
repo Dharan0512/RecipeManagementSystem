@@ -14,6 +14,7 @@ function Cuisine() {
         }else{
             try {             
                 const key = '77c68ef76bc74460a33a631b601f508c';
+                //#TODO: filters
                 const setVegie = `&tags=vegetarian` || " ";
                 const count = 12
                 const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${key}&cuisine=${name}&number=${count}${setVegie}`);

@@ -12,12 +12,13 @@ function Searched() {
         const count = 12;
         const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${key}&query=${name}&number=${count}`);
         const recipes = await data.json();
-        setSearchedRecipes(recipes.results)
+        setSearchedRecipes(recipes.results);
     };
 
     useEffect(()=>{
         getSearched(params.search)
     },[params.search])
+
   return (
     <Grid>
         {searchedRecipes.map((item)=>{

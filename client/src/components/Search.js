@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import {useState} from 'react';
-import {FaSearch} from "react-icons/fa";
+import {FaFontAwesome, FaInfo, FaSearch} from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-
-
+import FilterModal from './FilterModal';
+import FilterListTwoToneIcon from '@mui/icons-material/FilterListTwoTone';
 function Search() {
   const [input, setInput] = useState("");
   const navigate = useNavigate();
@@ -20,16 +20,19 @@ function Search() {
     <FormStyle onSubmit={submitHandler}>
       <div>
         <div>
-        <FaSearch>
-        </FaSearch>
-        <input onChange={(e)=> setInput(e.target.value)} type="text" value={input}/>
-        {/* button */}
+          <FaSearch>
+          </FaSearch>
+          <input onChange={(e)=> setInput(e.target.value)} type="text" value={input}/>
+        </div>  
+        <div>        
+          {/* TODO:  */}
+          <Button varient="primary" className='btn'> 
+           <FilterListTwoToneIcon className='icon' />
+            <span className='fil'>
+              Filters
+            </span>
+          </Button>
         </div>
-        <div>         
-        </div>
-        <Button varient="primary" className='btn'>
-          Filters
-        </Button>
       </div>
     </FormStyle>
   )
@@ -69,6 +72,7 @@ const FormStyle = styled.form`
       margin: 1rem 0rem 1rem 5rem;
       border-radius: 5px;
       background: linear-gradient(35deg, #494949, #313131);
+      display: fixed;
     }
 
 
@@ -82,6 +86,14 @@ const FormStyle = styled.form`
         h4{
             color: white
         }
+    }
+
+    .icon{
+      margin-left: 3.7rem;
+    }
+    
+    .fil{
+      padding-left: 1.2rem;
     }
 `
 
