@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 import {useState} from 'react';
-import {FaFontAwesome, FaInfo, FaSearch} from "react-icons/fa";
+import {FaSearch} from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import FilterModal from './FilterModal';
 import FilterListTwoToneIcon from '@mui/icons-material/FilterListTwoTone';
+
 function Search() {
   const [input, setInput] = useState("");
+   const [modalShow, setModalShow] = useState(false);
   const navigate = useNavigate();
 
   //event handler
@@ -26,12 +28,14 @@ function Search() {
         </div>  
         <div>        
           {/* TODO:  */}
-          <Button varient="primary" className='btn'> 
+          
+          <Button varient="primary" className='btn' onClick={()=>setModalShow(true)}> 
            <FilterListTwoToneIcon className='icon' />
             <span className='fil'>
               Filters
             </span>
           </Button>
+          <FilterModal show={modalShow} onHide={()=>setModalShow(false)}/>
         </div>
       </div>
     </FormStyle>
