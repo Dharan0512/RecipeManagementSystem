@@ -9,6 +9,8 @@ function FilterModal(props, onFilter) {
   const [isActive, setIsActive] = useState(false);
   const [isVeganActive, setVeganActive] = useState(false);
   const [selectedValue, setSelectedValue] = useState([0]);
+  const [sugarValue, setSugarValue] = useState([0]);
+  const [proteinValue, setProteinValue] = useState([0]);
 
   const handleChange = (event)=>{
 
@@ -35,8 +37,15 @@ function FilterModal(props, onFilter) {
     setSelectedValue(value);
   }
 
+  const handleSugarValue = (event, value)=>{
+    setSugarValue(value);
+  }
+
+  const handleProteinValue = (event, value)=>{
+    setProteinValue(value)
+  }
   const applyFilters = ()=>{
-    //Price Filters
+    //value Filters
     const minValue = selectedValue[0];
     const maxValue = selectedValue[1];
     
@@ -82,7 +91,7 @@ function FilterModal(props, onFilter) {
           <div>
             <SlidersCss>
             <label htmlFor='is-actives' className='health-title'>
-             &nbsp; Healthiness
+             &nbsp; Carb Level
             </label>
               <Slider value={selectedValue}
               onChange={handleChangeValue}
@@ -90,6 +99,40 @@ function FilterModal(props, onFilter) {
               min={0}
               // max={100}
               size="medium"
+              className="slider"
+              />
+            </SlidersCss>
+          </div>
+          {/* sugar level */}
+          <div>
+            <SlidersCss>
+            <label htmlFor='is-actives' className='health-title'>
+             &nbsp; SugarLevel
+            </label>
+              <Slider value={sugarValue}
+              onChange={handleSugarValue}
+              valueLabelDisplay='on'
+              min={0}
+              // max={100}
+              size="medium"
+              className="slider"
+              />
+            </SlidersCss>
+          </div>
+
+          {/* protein level */}
+           <div>
+            <SlidersCss>
+            <label htmlFor='is-actives' className='health-title'>
+             &nbsp; ProteinLevel
+            </label>
+              <Slider value={proteinValue}
+              onChange={handleProteinValue}
+              valueLabelDisplay='on'
+              min={0}
+              // max={100}
+              size="medium"
+              className="slider"
               />
             </SlidersCss>
           </div>
@@ -110,6 +153,11 @@ const SlidersCss = styled.div`
   .health-title{
     margin-top: .5rem
   }
+
+  .slider{
+    margin-top: 2rem;
+  }
+
 `
 
 export default FilterModal
