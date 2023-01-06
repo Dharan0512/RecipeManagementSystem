@@ -3,6 +3,8 @@ import styled from "styled-components";
 import {Splide, SplideSlide} from "@splidejs/react-splide"
 import '@splidejs/splide/dist/css/splide.min.css'
 import { Link } from "react-router-dom";
+import {MdFavoriteBorder, MdFavorite} from "react-icons/md"
+
 function Veggie() {
   const [veggie, setVeggie] = useState([]); //function allow to modify the variable
 
@@ -44,6 +46,7 @@ function Veggie() {
               <SplideSlide key={recipe.id}>
                 <Card>
                 <Link to={"/recipe/"+recipe.id}>
+                  <span className="fav"><MdFavoriteBorder/></span>
                   <p>{recipe.title}</p>
                   <img src={recipe.image} alt={recipe.title}></img>
                   <Gradient/>
@@ -89,9 +92,28 @@ const Wrapper = styled.div`
     font-size: 1rem;
     height: 40%
     display: flex;
-    justiy-content: center;
+    justify-content: center;
     align-items: center;
     margin-bottom: 2rem
+  }
+
+  .fav{
+    position: absolute;
+    z-index: 10;
+    left: 50%;
+    bottom: 0%;
+    transform: translate(-50%, 0%);
+    color: white;
+    width: 100%;
+    text-align: left;
+    font-weight: 600;
+    font-size: 2rem;
+    height: 40%
+    display: flex;
+    justify-content: flex-end;
+    align-item: 0rem;
+    margin-bottom: 22rem;
+    margin-left: 1rem;
   }
 `;
 
