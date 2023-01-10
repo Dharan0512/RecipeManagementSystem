@@ -11,8 +11,8 @@ function Recipe() {
   const [activeTab, setActiveTab] = useState("instructions")
 
   const fetchDetails = async()=>{
-    const check = localStorage.getItem('recipe')
-    // const check = 0;
+    // const check = localStorage.getItem('recipe')
+    const check = 0;
     if(check){
        setDetails(JSON.parse(check))
     }else{    
@@ -29,8 +29,8 @@ function Recipe() {
   }
   
   const fetchHtml = async()=>{
-    let check = localStorage.getItem('label');
-    // let check = 0;
+    // let check = localStorage.getItem('label');
+    let check = 0;
     if(check){
       setHtml(JSON.parse(check))
     }else{
