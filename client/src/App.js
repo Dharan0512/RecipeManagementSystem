@@ -5,6 +5,7 @@ import Search from "./components/Search";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { GiKnifeFork } from "react-icons/gi";
+import UserProfile from "./components/UserProfile";
 function App() {
   return (
     <div className="App">
@@ -12,6 +13,7 @@ function App() {
       <Nav>
         <GiKnifeFork/>
         <Logo to={"/"}>Recipe Management</Logo>
+          <UserProfile/>
       </Nav>
         <Search/>
         <Category/>
@@ -31,7 +33,7 @@ const Logo = styled(Link)`
 const Nav = styled.div`
   padding: 4rem 0rem;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     svg{
         font-size: 2rem;

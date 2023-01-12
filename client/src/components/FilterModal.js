@@ -51,9 +51,9 @@ function FilterModal(props, onFilter) {
     
   }
 
-  // useEffect(()=>{
-  //   applyFilters();
-  // },[selectedValue])
+  useEffect(()=>{
+    applyFilters();
+  },[selectedValue])
 
   return (
     <Modal {...props} size="md" centered>

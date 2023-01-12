@@ -1,6 +1,6 @@
 TODO:
 //like functionality
 //user can add recipe using nodejs and mongodb..
-//user can signIn get their own reciepe with own interest.
+//user can signIn get their own reciepe.
 
 TODO: review

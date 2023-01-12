@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import {Splide, SplideSlide} from "@splidejs/react-splide"
 import '@splidejs/splide/dist/css/splide.min.css'
@@ -7,7 +7,8 @@ import {MdFavoriteBorder, MdFavorite} from "react-icons/md"
 
 function Veggie() {
   const [veggie, setVeggie] = useState([]); //function allow to modify the variable
-
+  const unFavoriteImage = <MdFavoriteBorder/>
+  const [selectedImage, setSelectedImage] = useState(unFavoriteImage);
   const  getVeggie = async ()=>{
 
     const check = localStorage.getItem('veggie');
@@ -29,7 +30,11 @@ function Veggie() {
   useEffect(()=>{
    getVeggie();
   },[])
-  console.log('populate',veggie);
+
+  const handleFavorites = useCallback((newImage)=>{
+    setSelectedImage(newImage)
+  },[setSelectedImage])
+  
   return (
     <div>
         <Wrapper>
@@ -45,8 +50,8 @@ function Veggie() {
             return(
               <SplideSlide key={recipe.id}>
                 <Card>
+                <span onClick={()=>{handleFavorites(<MdFavorite/>)}} className="fav">{selectedImage}</span>
                 <Link to={"/recipe/"+recipe.id}>
-                  <span className="fav"><MdFavoriteBorder/></span>
                   <p>{recipe.title}</p>
                   <img src={recipe.image} alt={recipe.title}></img>
                   <Gradient/>
@@ -103,7 +108,7 @@ const Wrapper = styled.div`
     left: 50%;
     bottom: 0%;
     transform: translate(-50%, 0%);
-    color: white;
+    color: black;
     width: 100%;
     text-align: left;
     font-weight: 600;
@@ -114,6 +119,10 @@ const Wrapper = styled.div`
     align-item: 0rem;
     margin-bottom: 22rem;
     margin-left: 1rem;
+  }
+
+  .fav:hover{
+    color:white
   }
 `;
 

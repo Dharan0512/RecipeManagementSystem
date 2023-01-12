@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from "styled-components"
 import {motion} from "framer-motion";
 import {Link, useParams} from "react-router-dom"
-import {MdFavoriteBorder} from "react-icons"
+import {MdFavoriteBorder, MdFavorite} from "react-icons/md"
 
 function Cuisine() {
 
@@ -43,6 +43,7 @@ function Cuisine() {
             return(
                 <Card key={item.id}>
                     <Link to={"/recipe/"+item.id}>
+                    <span className="fav"><MdFavoriteBorder/></span>
                     <img src={item.image} alt=""/> 
                     <h4>{item.title}</h4>
                     </Link>
@@ -69,12 +70,20 @@ const Card = styled.div`
         text-decoration: none;
     }
     svg{
-        font-size: 3rem;
-        margin-left: 10rem;
+        font-size: 2rem;
+        margin-left: 1rem;
     }
     h4{
         text-align: center;
         padding: 1rem;
     }
+
+    .fav{
+    position: absolute;
+    z-index: 10;
+    color: white;
+    font-size: 2rem;
+    }
+  }
 `;
 export default Cuisine

@@ -5,15 +5,15 @@ function AddRecipe() {
     const [title, setTitle] = useState("")
     const [ingredients, setIngredients] = useState("");
     const [instructions, setInstructions] = useState("");
-    cosnt [image, setImage] = useState(null);
+    const [image, setImage] = useState(null);
 
     const handleSubmit = (e)=>{
         e.preventDefault();
-        const formData = new FormData();
-        formData.append("title",title), 
-        formData.append("ingredients", ingredients), 
-        formData.append("instructions",instructions),
-        formData.append("image",image); 
+        const formData = new FormData()
+        formData.append("title",title)
+        formData.append("ingredients", ingredients)
+        formData.append("instructions",instructions)
+        formData.append("image",image)
 
         axios.post("https://localhost:3000/api/recipes",formData, {
             headers: {
