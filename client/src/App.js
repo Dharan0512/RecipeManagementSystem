@@ -13,7 +13,7 @@ function App() {
       <Nav>
         <GiKnifeFork/>
         <Logo to={"/"}>Recipe Management</Logo>
-          <UserProfile/>
+          <UserProfile className="profile"/>
       </Nav>
         <Search/>
         <Category/>
@@ -37,6 +37,10 @@ const Nav = styled.div`
     align-items: center;
     svg{
         font-size: 2rem;
+    }
+  
+    .profile{
+      cursor: pointer
     }
 `;
 export default App;

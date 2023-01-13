@@ -4,11 +4,10 @@ import {Splide, SplideSlide} from "@splidejs/react-splide"
 import '@splidejs/splide/dist/css/splide.min.css'
 import { Link } from "react-router-dom";
 import {MdFavoriteBorder, MdFavorite} from "react-icons/md"
-
 function Veggie() {
   const [veggie, setVeggie] = useState([]); //function allow to modify the variable
-  const unFavoriteImage = <MdFavoriteBorder/>
-  const [selectedImage, setSelectedImage] = useState(unFavoriteImage);
+  const [favorties, setFavorites] = useState([])
+  // const [selectedImage, setSelectedImage] = useState(unFavoriteImage);
   const  getVeggie = async ()=>{
 
     const check = localStorage.getItem('veggie');
@@ -31,10 +30,27 @@ function Veggie() {
    getVeggie();
   },[])
 
-  const handleFavorites = useCallback((newImage)=>{
-    setSelectedImage(newImage)
-  },[setSelectedImage])
-  
+  // const handleFavorites = useCallback((newImage)=>{
+  //   console.log('newImage',newImage.type.name);
+    
+  //   if(newImage.type.name == "MdFavorite"){
+  //    return  setSelectedImage(<MdFavoriteBorder/>)
+  //   }else if(newImage.type.name == "MdFavoriteBorder"){
+  //     return setSelectedImage(<MdFavorite/>)
+  //   }
+  // },[setSelectedImage])
+
+ const toggleFavorite = (id)=>{
+   
+   if(favorties.includes(id)){
+     setFavorites(favorties.filter(f=> f !== id));
+     localStorage.setItem("favorties",[...favorties])
+    }else{
+      localStorage.setItem("favorties",[...favorties,id])
+      setFavorites([...favorties,id])
+    }
+    console.log('fav',favorties,id);
+ } 
   return (
     <div>
         <Wrapper>
@@ -50,7 +66,7 @@ function Veggie() {
             return(
               <SplideSlide key={recipe.id}>
                 <Card>
-                <span onClick={()=>{handleFavorites(<MdFavorite/>)}} className="fav">{selectedImage}</span>
+                <span onClick={()=>{toggleFavorite(recipe.id)}} className="fav">{favorties.includes(recipe.id) ? <MdFavorite/> : <MdFavoriteBorder/>}</span>
                 <Link to={"/recipe/"+recipe.id}>
                   <p>{recipe.title}</p>
                   <img src={recipe.image} alt={recipe.title}></img>
@@ -121,9 +137,6 @@ const Wrapper = styled.div`
     margin-left: 1rem;
   }
 
-  .fav:hover{
-    color:white
-  }
 `;
 
 const Gradient = styled.div`

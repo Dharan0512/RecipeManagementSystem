@@ -7,6 +7,7 @@ import {MdFavoriteBorder, MdFavorite} from "react-icons/md"
 function Cuisine() {
 
     const [cuisine, setCuisine] = useState([]);
+    const [favorties, setFavorites] = useState([])
     let params = useParams();
     const getCuisine = async(name)=>{
         const check = localStorage.getItem('cuisine');
@@ -29,6 +30,15 @@ function Cuisine() {
         }
     };
 
+ const toggleFavorite = (id)=>{
+  if(favorties.includes(id)){
+    localStorage.removeItem("favorties",favorties[id])
+    setFavorites(favorties.filter(f=> f !== id));
+  }else{
+    localStorage.setItem("favorties",[...favorties,id])
+    setFavorites([...favorties,id])
+  }
+ } 
     useEffect(()=>{
         getCuisine(params.type)
     },[params.type])
@@ -42,8 +52,9 @@ function Cuisine() {
         {cuisine.map((item)=>{
             return(
                 <Card key={item.id}>
+                    <span onClick={()=>{toggleFavorite(item.id)}} className="fav">{favorties.includes(item.id) ? <MdFavorite/> : <MdFavoriteBorder/>}</span>
                     <Link to={"/recipe/"+item.id}>
-                    <span className="fav"><MdFavoriteBorder/></span>
+                    {/* <span className="fav"><MdFavoriteBorder/></span> */}
                     <img src={item.image} alt=""/> 
                     <h4>{item.title}</h4>
                     </Link>
@@ -83,6 +94,10 @@ const Card = styled.div`
     z-index: 10;
     color: white;
     font-size: 2rem;
+    }
+
+    .fav:hover{
+        color: red;
     }
   }
 `;

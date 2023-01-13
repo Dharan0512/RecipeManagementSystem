@@ -7,7 +7,7 @@ import {MdFavoriteBorder, MdFavorite} from "react-icons/md"
 
 function Popular() {
   const [popular, setPopular] = useState([]); //function allow to modify the variable
-
+  const [favorties, setFavorites] = useState([])
   const  getPopular = async ()=>{
 
     const check = localStorage.getItem('popular');
@@ -29,7 +29,17 @@ function Popular() {
    getPopular();
   },[])
   console.log('populate',popular);
+
+ const toggleFavorite = (id)=>{
   
+  if(favorties.includes(id)){
+    setFavorites(favorties.filter(f=> f !== id));
+    localStorage.removeItem("favorties",favorties[id])
+  }else{
+    localStorage.setItem("favorties",[...favorties,id])
+    setFavorites([...favorties,id])
+  }
+ } 
   return (
     <div>
         <Wrapper>
@@ -45,8 +55,8 @@ function Popular() {
             return(
               <SplideSlide key={recipe.id}>
                 <Card>
+                <span onClick={()=>{toggleFavorite(recipe.id)}} className="fav">{favorties.includes(recipe.id) ? <MdFavorite/> : <MdFavoriteBorder/>}</span>
                   <Link to={'/recipe/'+recipe.id}>
-                  <span className="fav"><MdFavoriteBorder/></span>
                     <p>{recipe.title}</p>
                     <img src={recipe.image} alt={recipe.title}></img>
                   <Gradient/>
