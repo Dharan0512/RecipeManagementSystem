@@ -5,13 +5,14 @@ import {useState} from 'react';
 import { Button } from '@mui/material';
 import styled from 'styled-components';
 
-function FilterModal(props, onFilter) {
+function FilterModal(props) {
   const [isActive, setIsActive] = useState(false);
   const [isVeganActive, setVeganActive] = useState(false);
   const [selectedValue, setSelectedValue] = useState([0]);
   const [sugarValue, setSugarValue] = useState([0]);
   const [proteinValue, setProteinValue] = useState([0]);
-
+  console.log('props',props);
+  
   const handleChange = (event)=>{
 
     switch (event.target.name) {
@@ -28,9 +29,11 @@ function FilterModal(props, onFilter) {
     }
   }
 
-  const handleSubmit = (event)=>{
+  const handleSubmit = (event, onFilter)=>{
     event.preventDefault();
-    onFilter({isActive, isVeganActive})
+    console.log('event',event);
+    
+    onFilter({isActive, isVeganActive, selectedValue, sugarValue, proteinValue})
   }
 
   const handleChangeValue = (event, value)=>{
@@ -48,12 +51,16 @@ function FilterModal(props, onFilter) {
     //value Filters
     const minValue = selectedValue[0];
     const maxValue = selectedValue[1];
+    const minSugar = sugarValue[0];
+    const maxSugar = sugarValue[1];
+    const minProtein = proteinValue[0];
+    const maxProtein = proteinValue[1];
     
   }
 
   useEffect(()=>{
     applyFilters();
-  },[selectedValue])
+  },[isActive, isVeganActive, selectedValue, sugarValue, proteinValue])
 
   return (
     <Modal {...props} size="md" centered>
@@ -139,7 +146,8 @@ function FilterModal(props, onFilter) {
         </form>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide}>Apply</Button>
+        {/* props.onHide TODO:*/}
+      <Button onClick={props.onHide} type="submit">Submit</Button>
       </Modal.Footer>
     </Modal>
   )

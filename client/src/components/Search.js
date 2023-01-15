@@ -12,8 +12,6 @@ function Search() {
   const navigate = useNavigate();
   const url = window.location.pathname;
   const recipeUrl = url.includes("/recipe")
-  console.log('reciurl',recipeUrl);
-  
 
   //event handler
   const submitHandler = (e) =>{
@@ -31,7 +29,6 @@ function Search() {
           <input onChange={(e)=> setInput(e.target.value)} type="text" value={input}/>
         </div>  
         <div>        
-          {/* TODO:  */}       
           <Button varient="primary" className={`${url === '/' || recipeUrl ? 'hideout btn' : 'btn'}`} onClick={()=>setModalShow(true)}> 
            <FilterListTwoToneIcon className='icon' />
             <span className='fil'>

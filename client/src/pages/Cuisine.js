@@ -4,6 +4,7 @@ import {motion} from "framer-motion";
 import {Link, useParams} from "react-router-dom"
 import {MdFavoriteBorder, MdFavorite} from "react-icons/md"
 
+
 function Cuisine() {
 
     const [cuisine, setCuisine] = useState([]);
