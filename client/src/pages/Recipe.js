@@ -20,6 +20,8 @@ function Recipe() {
         const key = '77c68ef76bc74460a33a631b601f508c';
         const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${key}`);
         const detailData = await data.json();
+        console.log('detailsData',detailData);
+        
         localStorage.setItem('recipe',JSON.stringify(detailData))
         setDetails(detailData);
       } catch (error) {

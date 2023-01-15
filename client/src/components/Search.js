@@ -8,8 +8,12 @@ import FilterListTwoToneIcon from '@mui/icons-material/FilterListTwoTone';
 
 function Search() {
   const [input, setInput] = useState("");
-   const [modalShow, setModalShow] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
   const navigate = useNavigate();
+  const url = window.location.pathname;
+  const recipeUrl = url.includes("/recipe")
+  console.log('reciurl',recipeUrl);
+  
 
   //event handler
   const submitHandler = (e) =>{
@@ -27,9 +31,8 @@ function Search() {
           <input onChange={(e)=> setInput(e.target.value)} type="text" value={input}/>
         </div>  
         <div>        
-          {/* TODO:  */}
-          
-          <Button varient="primary" className='btn' onClick={()=>setModalShow(true)}> 
+          {/* TODO:  */}       
+          <Button varient="primary" className={`${url === '/' || recipeUrl ? 'hideout btn' : 'btn'}`} onClick={()=>setModalShow(true)}> 
            <FilterListTwoToneIcon className='icon' />
             <span className='fil'>
               Filters
@@ -98,6 +101,10 @@ const FormStyle = styled.form`
     
     .fil{
       padding-left: 1.2rem;
+    }
+
+    .hideout {
+      display: none
     }
 `
 
