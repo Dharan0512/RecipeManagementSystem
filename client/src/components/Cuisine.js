@@ -4,11 +4,14 @@ import {motion} from "framer-motion";
 import {Link, useParams} from "react-router-dom"
 import {MdFavoriteBorder, MdFavorite} from "react-icons/md"
 import Pagination from '../components/Pagination';
-import {AppContext}  from '../components/FilterModal';
+import AppContext  from '../components/FilterModal';
 
 function Cuisine() {
     const [cuisine, setCuisine] = useState([]);
     const [favorties, setFavorites] = useState([]);
+    const proteinValue = useContext(AppContext)
+    let [proValue, setProteinValue] = useState(proteinValue)
+    console.log('proValue',proteinValue, proValue);
     
     let params = useParams();
     const getCuisine = async(name)=>{
@@ -21,12 +24,13 @@ function Cuisine() {
                 //#TODO: filters
                 const setVegie = `&tags=vegetarian` || " ";
                 const count = 12
-                const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${key}&cuisine=${name}&number=${count}${setVegie}`);
+                const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${key}&cuisine=${name}&number=${count}${setVegie}&minProtein=${proteinValue}`);
                 const recipes = await data.json();
                 localStorage.setItem('cuisine',JSON.stringify(recipes.results)) //-  store in localstorage
                 setCuisine(recipes.results) 
             } catch (error) {
                 console.log('Cuisine-error',error);
+                
             }
         }
     };
@@ -58,7 +62,7 @@ function Cuisine() {
                     {/* <span className="fav"><MdFavoriteBorder/></span> */}
                     <img src={item.image} alt=""/> 
                     <h4>{item.title}</h4>
-                    <p>hi:test</p>
+                    <p>hi:{proValue}</p>
                     </Link>
                 </Card>
             );

@@ -5,13 +5,17 @@ import {CgProfile} from "react-icons/cg";
 import "../assets/images/not_found.svg"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {TbPizzaOff, Tbpizza} from 'react-icons/tb'
+import { Button } from '@mui/material';
 
 
 function UserProfile(props) {
     
   return (
     <DIV className='profile'>
-        <TbPizzaOff/> Sign IN
+        <TbPizzaOff/> 
+          <Button>
+          Sign IN
+          </Button>
     </DIV>
   )
 }
@@ -20,8 +24,6 @@ const DIV = styled.div`
   .profile{
     cursor: pointer;
   }
-
-
 ` 
 
 export default UserProfile

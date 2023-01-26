@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, createContext } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Slider from '@mui/material/Slider'
 import {useState} from 'react';
 import { Button } from '@mui/material';
 import styled from 'styled-components';
+import { useAppContext } from '../context/appContext';
+import Cuisine from '../pages/Cuisine';
+export const AppContext = createContext();
 
 function FilterModal(props) {
   const [isActive, setIsActive] = useState(false);
@@ -11,8 +14,10 @@ function FilterModal(props) {
   const [selectedValue, setSelectedValue] = useState([0]);
   const [sugarValue, setSugarValue] = useState([0]);
   const [proteinValue, setProteinValue] = useState([0]);
-  console.log('props',props);
+
+  // console.log('useApp',useAppContext);
   
+
   const handleChange = (event)=>{
 
     switch (event.target.name) {
@@ -20,7 +25,7 @@ function FilterModal(props) {
         console.log('veg');
         setIsActive(event.target.checked);
         break;
-      case 'isActives':
+      case 'isVeganActive':
         console.log('vegan');
         setVeganActive(event.target.checked);
         break;
@@ -29,40 +34,34 @@ function FilterModal(props) {
     }
   }
 
-  const handleSubmit = (event, onFilter)=>{
-    event.preventDefault();
-    console.log('event',event);
-    
-    onFilter({isActive, isVeganActive, selectedValue, sugarValue, proteinValue})
-  }
-
+  
   const handleChangeValue = (event, value)=>{
     setSelectedValue(value);
   }
-
+  
   const handleSugarValue = (event, value)=>{
     setSugarValue(value);
   }
-
+  
   const handleProteinValue = (event, value)=>{
     setProteinValue(value)
   }
   const applyFilters = ()=>{
     //value Filters
-    const minValue = selectedValue[0];
-    const maxValue = selectedValue[1];
-    const minSugar = sugarValue[0];
-    const maxSugar = sugarValue[1];
-    const minProtein = proteinValue[0];
-    const maxProtein = proteinValue[1];
+    console.log('af',proteinValue)
+  }
+  const handleSubmit = (event, onFilter)=>{
+    event.preventDefault();
     
+    onFilter({isActive, isVeganActive, selectedValue, sugarValue, proteinValue})
   }
 
   useEffect(()=>{
-    applyFilters();
+    applyFilters(); 
   },[isActive, isVeganActive, selectedValue, sugarValue, proteinValue])
-
+  
   return (
+    <AppContext.Provider value={{isActive, isVeganActive, selectedValue, sugarValue, proteinValue}}>
     <Modal {...props} size="md" centered>
       <Modal.Header closeButton>
         <Modal.Title>
@@ -88,7 +87,7 @@ function FilterModal(props) {
               <input 
               type="checkbox"
               id="is-actives"
-              name='isActives'
+              name='isVeganActive'
               checked={isVeganActive}
               onChange={handleChange}
               />
@@ -147,9 +146,10 @@ function FilterModal(props) {
       </Modal.Body>
       <Modal.Footer>
         {/* props.onHide TODO:*/}
-      <Button onClick={props.onHide} type="submit">Submit</Button>
+      <Button onClick={props.onHide} onSubmit={handleSubmit} type="submit">Submit</Button>
       </Modal.Footer>
     </Modal>
+  </AppContext.Provider>
   )
 }
 
@@ -164,6 +164,10 @@ const SlidersCss = styled.div`
 
   .slider{
     margin-top: 2rem;
+  }
+
+  .none{
+    display: none;
   }
 
 `

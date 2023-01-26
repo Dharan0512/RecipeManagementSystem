@@ -3,4 +3,12 @@ TODO:
 //user can add recipe using nodejs and mongodb..
 //user can signIn get their own reciepe.
 
+for hover: transform: scale(1.2);
+
 TODO: review
+
+addcontext steps:
+const userContext = createContext()
+
+// set provider in parent 
+<userContext.provider value={//state..}>
