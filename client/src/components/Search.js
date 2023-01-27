@@ -28,7 +28,7 @@ function Search() {
           </FaSearch>
           <input onChange={(e)=> setInput(e.target.value)} type="text" value={input}/>
         </div>  
-        <div>        
+        {/* <div>        
           <Button varient="primary" className={`${url === '/' || recipeUrl ? 'hideout btn' : 'btn'}`} onClick={()=>setModalShow(true)}> 
            <FilterListTwoToneIcon className='icon' />
             <span className='fil'>
@@ -36,7 +36,7 @@ function Search() {
             </span>
           </Button>
           <FilterModal show={modalShow} onHide={()=>setModalShow(false)}/>
-        </div>
+        </div> */}
       </div>
     </FormStyle>
   )
@@ -45,10 +45,8 @@ function Search() {
 const FormStyle = styled.form`
     margin: 0rem 13rem;
     div{
-      display: flex;
-      flex-direction: row;
       position: relative;
-      width: 100%;
+       width: 100%;
     }
     input{
         border: none;
@@ -59,6 +57,8 @@ const FormStyle = styled.form`
         border: none;
         border-radius: 2rem;
         outline: none;
+        width: 100%;
+        
     }
 
     svg{

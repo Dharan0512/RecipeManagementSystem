@@ -5,7 +5,9 @@ import {useState} from 'react';
 import { Button } from '@mui/material';
 import styled from 'styled-components';
 import { useAppContext } from '../context/appContext';
-import Cuisine from '../pages/Cuisine';
+import Cuisine from './Cuisine';
+import Linker from './Linker';
+
 export const AppContext = createContext();
 
 function FilterModal(props) {
@@ -61,7 +63,8 @@ function FilterModal(props) {
   },[isActive, isVeganActive, selectedValue, sugarValue, proteinValue])
   
   return (
-    <AppContext.Provider value={{isActive, isVeganActive, selectedValue, sugarValue, proteinValue}}>
+    <div>
+    {/* <AppContext.Provider value={[isActive, isVeganActive, selectedValue, sugarValue, proteinValue]}> */}
     <Modal {...props} size="md" centered>
       <Modal.Header closeButton>
         <Modal.Title>
@@ -146,10 +149,12 @@ function FilterModal(props) {
       </Modal.Body>
       <Modal.Footer>
         {/* props.onHide TODO:*/}
-      <Button onClick={props.onHide} onSubmit={handleSubmit} type="submit">Submit</Button>
+      <Button onClick={props.onHide} onSubmit={()=>{handleSubmit()}} type="submit">Submit</Button>
       </Modal.Footer>
     </Modal>
-  </AppContext.Provider>
+    <Linker props={[isActive, isVeganActive, selectedValue, sugarValue, proteinValue]}/>
+    {/* </AppContext.Provider> */}
+    </div>
   )
 }
 

@@ -1,8 +1,8 @@
 //routing 
 import React from 'react';
 import Home from './Home';
-import Cuisine from './Cuisine';
-// import Cuisine from '../components/Cuisine';
+// import Cuisine from './Cuisine';
+import Cuisine from '../components/Cuisine';
 import Searched from './Searched';
 import Recipe from './Recipe';
 import {Route, Routes, useLocation} from "react-router-dom";
