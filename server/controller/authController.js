@@ -36,6 +36,7 @@ const login = async (req, res) =>{
     if(!email || !password){
         throw new BadRequestError("Please provide all values")
     }
+
     const user = await User.findOne({email}).select('+password');
     if(!user){
         throw new UnAuthenticatedError('Invalid Credentials');
@@ -45,6 +46,7 @@ const login = async (req, res) =>{
     if(!isPasswordCorrect){
         throw new UnAuthenticatedError('Invalid Credentials')
     }
+
     const token = user.createJWT();
     attachCookie({res,token})
     user.password = undefined;

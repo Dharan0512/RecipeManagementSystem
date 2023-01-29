@@ -13,7 +13,7 @@ import {
 
 router.route('/register').post(register);
 router.route('/login').post(login);
-router.get('/logout').post(logout);
+router.get('/logout', logout);
 
 router.route('/updateUser').patch(updateUser)
 router.route('/getCurrentUser').get(getCurrentUser)

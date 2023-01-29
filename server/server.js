@@ -20,6 +20,8 @@ import connectDB from "./db/connect.js"
 
 // Routers
 import authRoutes from "./routes/authRoutes.js"
+import recipeRoutes from "./routes/recipeRoutes.js"
+
 
 
 //env
@@ -38,7 +40,7 @@ app.use(cookieParser())
 
 //routes
 app.use('/api/v1/auth',authRoutes);
-
+app.use('api/v1/recipe',recipeRoutes)
 
 app.get('/',(req, res)=>{
     try {
