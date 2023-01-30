@@ -39,8 +39,8 @@ app.use(cookieParser())
 
 
 //routes
-app.use('/api/v1/auth',authRoutes);
-app.use('api/v1/recipe',recipeRoutes)
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/recipe', recipeRoutes);
 
 app.get('/',(req, res)=>{
     try {
