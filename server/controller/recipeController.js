@@ -15,15 +15,11 @@ const addRecipe = async (req, res) => {
     // if(!title ||  !instructions || !ingredients){
     //     throw new BadRequestError('please provide all values')
     // }
-
-    let obj = JSON.parse(ingredients);
-    console.log('obj',obj);
     
-    
-
+     
     const newRecipe = await recipe.create({
         title, image:{name: "null", type: "null", path: "null" },
-        instructions: instructions, ingredient: [{name: ingredients, amount: ingredients}]
+        instructions: instructions, ingredient: [...ingredients]
     });
     
     res.status(201).json({msg: "Recipe upload successfully"})
