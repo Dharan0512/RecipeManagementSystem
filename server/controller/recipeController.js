@@ -1,25 +1,29 @@
 import {BadRequestError} from "../errors/index.js"
 import recipe from "../models/Recipe.js"
-import * as fs from "fs";
 import {StatusCodes} from "http-status-codes";
 
 
 const addRecipe = async (req, res) => {
-    console.log('req',req.file);
     
-    const {title} = req.body;
-    console.log({title});
+    const {title, instructions, ingredients} = req.body;
+    console.log({title, instructions, ingredients, });
     
-    const name = req.file.originalname
-    const buffer = req.file.buffer
-    const type = req.file.mimetype
+    // const name = req.file.originalname
+    // const type = req.file.mimetype
+    // const path = req.file.path
     
-    // if(!title ||  !instruction || !indegredients){
+    // if(!title ||  !instructions || !ingredients){
     //     throw new BadRequestError('please provide all values')
     // }
 
+    let obj = JSON.parse(ingredients);
+    console.log('obj',obj);
+    
+    
+
     const newRecipe = await recipe.create({
-        title, image:{name: name, data: buffer, type: type}
+        title, image:{name: "null", type: "null", path: "null" },
+        instructions: instructions, ingredient: [{name: ingredients, amount: ingredients}]
     });
     
     res.status(201).json({msg: "Recipe upload successfully"})

@@ -4,21 +4,36 @@ import multer from "multer";
 import path from "path"
 import {addRecipe, updateRecipe} from "../controller/recipeController.js"
 
-const storage = multer.diskStorage({
-        destination: function(req, file, cb){
-            cb(null, './upload')
-        },
 
-        filename: function(req, file, cb){
-           cb(null, path.extname(file.originalname)) 
-        }
-});
+//TODO: study why its not working and why it return buffer..
+// const storage = multer.diskStorage({
+//     destination: function(req, file, cb){
+//         cb(null, './upload')
+//     },
+    
+//     filename: function(req, file, cb){
+//             console.log('path',path.extname(file.filename));
+//            cb(null, path.extname(file.originalname)) 
+//         }
+// });
 
 
-const upload = multer({Storage: storage});
+// const upload = multer({Storage: storage});
+const upload = multer({dest: 'upload/'});
 
-router.route('/').post(upload.single('image'),addRecipe)
-router.route('/:id').patch(updateRecipe)
-//delete recipe;
+    // upload recipe
+router.route('/upload').post(upload.single('image'),addRecipe)
+
+    //get all recipe
+router.route('/:id').get(updateRecipe)
+
+    //get single recipe
+router.route('/:id/:id').get(updateRecipe)
+
+    //update single recipe
+router.route('/:id/:id').patch(updateRecipe)
+
+    //delete recipe;
+router.route('/:id/:id').delete(updateRecipe)
 
 export default router;
