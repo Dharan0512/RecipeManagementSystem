@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-//import rateLimiter for production use;
+//TODO: import rateLimiter for production use;
 
 import {
     register,

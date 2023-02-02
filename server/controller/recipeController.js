@@ -2,6 +2,9 @@ import {BadRequestError} from "../errors/index.js"
 import recipe from "../models/Recipe.js"
 import {StatusCodes} from "http-status-codes";
 
+//TODO: image should to un-comment
+
+//add Recipe
 
 const addRecipe = async (req, res) => {
     
@@ -15,8 +18,7 @@ const addRecipe = async (req, res) => {
     // if(!title ||  !instructions || !ingredients){
     //     throw new BadRequestError('please provide all values')
     // }
-    
-     
+        
     const newRecipe = await recipe.create({
         title, image:{name: "null", type: "null", path: "null" },
         instructions: instructions, ingredient: [...ingredients]
@@ -25,10 +27,45 @@ const addRecipe = async (req, res) => {
     res.status(201).json({msg: "Recipe upload successfully"})
 }
 
+
+//update Recipe
 const updateRecipe = async(req, res) => {
     const {name, instruction, indegredients} = req.body;
+    
+
 
     res.json({msg: name, instruction, indegredients})
 }
 
-export {addRecipe, updateRecipe}
+
+//get single Recipe
+const singleRecipe = async(req, res) => {
+    const {name, instruction, indegredients} = req.body;
+    
+
+
+    res.json({msg: name, instruction, indegredients})
+}
+
+
+//get all recipe
+const allRecipe = async(req, res) => {
+    const {name, instruction, indegredients} = req.body;
+    
+
+
+    res.json({msg: name, instruction, indegredients})
+}
+
+
+//delete Recipe
+const deleteRecipe = async(req, res) => {
+    const {name, instruction, indegredients} = req.body;
+    
+
+
+    res.json({msg: name, instruction, indegredients})
+}
+
+
+export {addRecipe, updateRecipe, deleteRecipe, singleRecipe, allRecipe}
