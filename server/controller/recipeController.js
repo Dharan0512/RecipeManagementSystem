@@ -1,6 +1,7 @@
 import {BadRequestError} from "../errors/index.js"
 import recipe from "../models/Recipe.js"
 import {StatusCodes} from "http-status-codes";
+import Recipe from "../models/Recipe.js";
 
 //TODO: image should to un-comment
 
@@ -28,12 +29,31 @@ const addRecipe = async (req, res) => {
 }
 
 
-//update Recipe
+//update Recipe TODO: need to test
 const updateRecipe = async(req, res) => {
-    const {name, instruction, indegredients} = req.body;
+    const {name, instructions, ingredients} = req.body;
     
+    
+    // const name = req.file.originalname
+    // const type = req.file.mimetype
+    // const path = req.file.path
+    
+    // if(!title ||  !instructions || !ingredients){
+    //     throw new BadRequestError('please provide all values')
+    // }
 
+        //set url in recipe id
+    const recipe = await Recipe.findOne({_id: req.recipeId})
 
+        recipe.title = title;
+        recipe.image.name = "null";
+        recipe.image.type = "null";
+        recipe.image.path = "null"; 
+        recipe.instructions = instructions;
+        recipe.ingredient = [...ingredients];
+
+        await recipe.save()
+        
     res.json({msg: name, instruction, indegredients})
 }
 
