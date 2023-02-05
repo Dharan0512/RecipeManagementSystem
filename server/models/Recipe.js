@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const ingredientSchema = new mongoose.Schema({
     name: {
@@ -33,7 +33,11 @@ const RecipeSchema = new mongoose.Schema({
         type: Array,
         required: true,
     },
-    ingredient: [ingredientSchema]
+    ingredient: [ingredientSchema],
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }
 })
 
 
