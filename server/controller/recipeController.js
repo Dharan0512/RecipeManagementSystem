@@ -29,7 +29,7 @@ const addRecipe = async (req, res) => {
 }
 
 
-//update Recipe TODO: need to test
+//update Recipe, single, allrecipe, delete TODO: need to test
 const updateRecipe = async(req, res) => {
     const {name, instructions, ingredients} = req.body;
     
@@ -60,31 +60,32 @@ const updateRecipe = async(req, res) => {
 
 //get single Recipe
 const singleRecipe = async(req, res) => {
-    const {name, instruction, indegredients} = req.body;
-    
+    const {id} = req.body;
+   
+    const recipe = await Recipe.findOne({_id: id})
 
 
-    res.json({msg: name, instruction, indegredients})
+    res.json({msg: recipe})
 }
 
 
 //get all recipe
 const allRecipe = async(req, res) => {
-    const {name, instruction, indegredients} = req.body;
-    
+
+    const recipe = await Recipe.find()
 
 
-    res.json({msg: name, instruction, indegredients})
+    res.json({msg: recipe})
 }
 
 
 //delete Recipe
 const deleteRecipe = async(req, res) => {
-    const {name, instruction, indegredients} = req.body;
+    const {id} = req.body;
     
+    const recipe = await Recipe.delete({_id: id})
 
-
-    res.json({msg: name, instruction, indegredients})
+    res.json({msg: "Deleted successfully" })
 }
 
 
