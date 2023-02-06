@@ -1,6 +1,6 @@
 import express from "express"
 const router = express.Router()
-import multer from "multer";
+import multer, { diskStorage } from "multer";
 import path from "path"
 import {addRecipe, updateRecipe, singleRecipe, allRecipe, deleteRecipe} from "../controller/recipeController.js"
 
@@ -19,7 +19,12 @@ import {addRecipe, updateRecipe, singleRecipe, allRecipe, deleteRecipe} from "..
 
 
 // const upload = multer({Storage: storage});
-const upload = multer({dest: 'upload/'});
+const upload = multer({dest: 'public/images/'},{Storage: diskStorage({
+    filename: function(req,file,cb){
+        // let ext = file.originalname.substring(file.originalname.lastIndexOf('.'), file.originalname.length)        
+        cb(null, new Date.now().toISOString() + "_" +"xxx")
+    }
+})});
 
     // upload recipe
 router.route('/upload').post(upload.single('image'),addRecipe)
@@ -28,6 +33,6 @@ router.route('/upload').post(upload.single('image'),addRecipe)
 router.route('/').get(allRecipe)
 
     //get single recipe, update recipe, 
-router.route('/:id').get(singleRecipe).patch(updateRecipe).delete(deleteRecipe)
+router.route('/:id').get(singleRecipe).patch(upload.single('image'),updateRecipe).delete(deleteRecipe)
 
 export default router;

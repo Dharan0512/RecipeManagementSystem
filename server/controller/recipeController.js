@@ -20,50 +20,51 @@ const addRecipe = async (req, res) => {
     if(!title ||  !instructions || !ingredients){
         throw new BadRequestError('please provide all values')
     }
-    const ingre = JSON.parse(ingredients)
-    console.log('ingre',ingre);
+    const parsedIngredient = JSON.parse(ingredients)
     
     const newRecipe = await recipe.create({
         title, image:{name: name, type: type, path: path },
-        instructions: instructions, ingredient: ingre,
+        instructions: instructions, ingredient: parsedIngredient,
     });
     
     res.status(201).json({msg: "Recipe upload successfully"})
 }
 
 
-//update Recipe, single, allrecipe, delete TODO: need to test
 const updateRecipe = async(req, res) => {
     const {title, instructions, ingredients} = req.body;
-    
-    
-    const name = req.file.originalname
-    const type = req.file.mimetype
-    const path = req.file.path
-    
-    if(!title ||  !instructions || !ingredients){
-        throw new BadRequestError('please provide all values')
-    }
+    const {id} = req.params
+    console.log('req',req);
 
+    if(req.file){
+    var filename = req.file.originalname
+    var type = req.file.mimetype
+    var path = req.file.path
+    } 
+
+    const parsedIngredient = JSON.parse(ingredients)
         //set url in recipe id
-    const recipe = await Recipe.findOne({_id: req.recipeId})
+    const recipe = await Recipe.findById({_id: id})
 
         recipe.title = title;
-        recipe.image.name = name;
+        if(req.file){
+        recipe.image.name = filename;
         recipe.image.type = type;
-        recipe.image.path = path; 
+        recipe.image.path = path;
+        }
         recipe.instructions = instructions;
-        recipe.ingredient = [...ingredients];
+        recipe.ingredient = parsedIngredient;
 
         await recipe.save()
         
-    res.json({msg: name, instructions, ingredients})
+    res.json({msg: title, instructions, ingredients})
 }
 
 
 //get single Recipe
 const singleRecipe = async(req, res) => {
     const {id} = req.params
+    console.log('req',req);
     
     const recipe = await Recipe.findById({_id: id})
 

@@ -11,8 +11,10 @@ import cookieParser from "cookie-parser"
 
 //file system
 import {dirname} from "path";
-import { fileURLToPath } from "url";
-import path from "path";
+import { fileURLToPath, URL } from "url";
+import path from "path"
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 //db 
 import connectDB from "./db/connect.js"
@@ -37,10 +39,18 @@ app.use(express.json())
 app.use(mongoSanitize())
 app.use(cookieParser())
 
+//serve static files
+app.use(express.static('public'))
 
 //routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/recipe', recipeRoutes);
+console.log('dirname',path.join(__dirname,'public/images/'));
+
+app.use('/static',express.static(path.join(__dirname,'public')))
+app.use('/image/',(req,res)=>{
+    res.send("sended")
+})
 
 app.get('/',(req, res)=>{
     try {
