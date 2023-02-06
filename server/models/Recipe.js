@@ -34,10 +34,10 @@ const RecipeSchema = new mongoose.Schema({
         required: true,
     },
     ingredient: [ingredientSchema],
-    author: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    }
+    // author: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'User'
+    // }
 })
 
 

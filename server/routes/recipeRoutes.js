@@ -25,15 +25,9 @@ const upload = multer({dest: 'upload/'});
 router.route('/upload').post(upload.single('image'),addRecipe)
 
     //get all recipe
-router.route('/:id').get(allRecipe)
+router.route('/').get(allRecipe)
 
     //get single recipe, update recipe, 
-router.route('/:id/:id').get(singleRecipe).patch(updateRecipe).delete(deleteRecipe)
-
-    //update single recipe
-router.route('/:id/:id').patch(updateRecipe)
-
-    //delete recipe;
-router.route('/:id/:id').delete(deleteRecipe)
+router.route('/:id').get(singleRecipe).patch(updateRecipe).delete(deleteRecipe)
 
 export default router;

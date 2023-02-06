@@ -2,6 +2,7 @@ import {BadRequestError} from "../errors/index.js"
 import recipe from "../models/Recipe.js"
 import {StatusCodes} from "http-status-codes";
 import Recipe from "../models/Recipe.js";
+import { json } from "express";
 
 //TODO: image should to un-comment
 
@@ -10,19 +11,21 @@ import Recipe from "../models/Recipe.js";
 const addRecipe = async (req, res) => {
     
     const {title, instructions, ingredients} = req.body;
-    console.log({title, instructions, ingredients, });
+    console.log({title, instructions, ingredients });
     
-    // const name = req.file.originalname
-    // const type = req.file.mimetype
-    // const path = req.file.path
+    const name = req.file.originalname
+    const type = req.file.mimetype
+    const path = req.file.path
     
-    // if(!title ||  !instructions || !ingredients){
-    //     throw new BadRequestError('please provide all values')
-    // }
-        
+    if(!title ||  !instructions || !ingredients){
+        throw new BadRequestError('please provide all values')
+    }
+    const ingre = JSON.parse(ingredients)
+    console.log('ingre',ingre);
+    
     const newRecipe = await recipe.create({
-        title, image:{name: "null", type: "null", path: "null" },
-        instructions: instructions, ingredient: [...ingredients]
+        title, image:{name: name, type: type, path: path },
+        instructions: instructions, ingredient: ingre,
     });
     
     res.status(201).json({msg: "Recipe upload successfully"})
@@ -31,39 +34,38 @@ const addRecipe = async (req, res) => {
 
 //update Recipe, single, allrecipe, delete TODO: need to test
 const updateRecipe = async(req, res) => {
-    const {name, instructions, ingredients} = req.body;
+    const {title, instructions, ingredients} = req.body;
     
     
-    // const name = req.file.originalname
-    // const type = req.file.mimetype
-    // const path = req.file.path
+    const name = req.file.originalname
+    const type = req.file.mimetype
+    const path = req.file.path
     
-    // if(!title ||  !instructions || !ingredients){
-    //     throw new BadRequestError('please provide all values')
-    // }
+    if(!title ||  !instructions || !ingredients){
+        throw new BadRequestError('please provide all values')
+    }
 
         //set url in recipe id
     const recipe = await Recipe.findOne({_id: req.recipeId})
 
         recipe.title = title;
-        recipe.image.name = "null";
-        recipe.image.type = "null";
-        recipe.image.path = "null"; 
+        recipe.image.name = name;
+        recipe.image.type = type;
+        recipe.image.path = path; 
         recipe.instructions = instructions;
         recipe.ingredient = [...ingredients];
 
         await recipe.save()
         
-    res.json({msg: name, instruction, indegredients})
+    res.json({msg: name, instructions, ingredients})
 }
 
 
 //get single Recipe
 const singleRecipe = async(req, res) => {
-    const {id} = req.body;
-   
-    const recipe = await Recipe.findOne({_id: id})
-
+    const {id} = req.params
+    
+    const recipe = await Recipe.findById({_id: id})
 
     res.json({msg: recipe})
 }
