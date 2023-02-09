@@ -1,8 +1,10 @@
 import jwt from "jsonwebtoken"
-import { UnAuthenticatedError } from "../errors/index"
+import { UnAuthenticatedError } from "../errors/index.js"
 
 
 const auth = async (req, res, next)=>{
+    console.log('auth middleware');
+    
     const token = req.cookies.token;
     if(!token){
         throw new UnAuthenticatedError(`Authentiated Invalid`)

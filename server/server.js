@@ -45,9 +45,8 @@ app.use(express.static('public'))
 //routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/recipe', recipeRoutes);
-console.log('dirname',path.join(__dirname,'public/images/'));
 
-app.use('/static',express.static(path.join(__dirname,'public')))
+// app.use('/static',express.static(path.join(__dirname,'public')))
 app.use('/image/',(req,res)=>{
     res.send("sended")
 })

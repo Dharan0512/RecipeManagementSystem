@@ -21,8 +21,8 @@ import {addRecipe, updateRecipe, singleRecipe, allRecipe, deleteRecipe} from "..
 // const upload = multer({Storage: storage});
 const upload = multer({dest: 'public/images/'},{Storage: diskStorage({
     filename: function(req,file,cb){
-        // let ext = file.originalname.substring(file.originalname.lastIndexOf('.'), file.originalname.length)        
-        cb(null, new Date.now().toISOString() + "_" +"xxx")
+        let ext = file.originalname.substring(file.originalname.lastIndexOf('.'), file.originalname.length)        
+        cb(null, new Date.now().toISOString() + ext)
     }
 })});
 

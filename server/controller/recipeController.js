@@ -34,7 +34,7 @@ const addRecipe = async (req, res) => {
 const updateRecipe = async(req, res) => {
     const {title, instructions, ingredients} = req.body;
     const {id} = req.params
-    console.log('req',req);
+    // console.log('req',req);
 
     if(req.file){
     var filename = req.file.originalname

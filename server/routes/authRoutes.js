@@ -11,12 +11,16 @@ import {
     logout
 } from "../controller/authController.js"
 
+import auth from "../middleware/auth.js"
+
+
+
 router.route('/register').post(register);
 router.route('/login').post(login);
 router.get('/logout', logout);
 
-router.route('/updateUser').patch(updateUser)
-router.route('/getCurrentUser').get(getCurrentUser)
+router.route('/updateuser').patch(auth, updateUser)
+router.route('/getuser').get(auth, getCurrentUser)
 
 
 export default router;
