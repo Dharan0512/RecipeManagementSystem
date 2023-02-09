@@ -1,9 +1,9 @@
 TODO:
-//like functionality
+//like functionality save in mongodb. For now store in localstorage
 //user can add recipe using nodejs and mongodb..
 //user can signIn get their own reciepe.
 
-for hover: transform: scale(1.2);
+//User Recipes are available in home screen session
 
 TODO: review
 
