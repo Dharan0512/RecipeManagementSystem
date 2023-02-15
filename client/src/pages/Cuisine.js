@@ -58,7 +58,6 @@ function Cuisine() {
                     {/* <span className="fav"><MdFavoriteBorder/></span> */}
                     <img src={item.image} alt=""/> 
                     <h4>{item.title}</h4>
-                    <p>hi:test</p>
                     </Link>
                 </Card>
             );

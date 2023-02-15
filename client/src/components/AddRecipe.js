@@ -3,10 +3,25 @@ import axios from "axios"
 
 function AddRecipe() {
     const [title, setTitle] = useState("")
-    const [ingredients, setIngredients] = useState("");
-    const [instructions, setInstructions] = useState("");
+    const [ingredients, setIngredients] = useState([]);
+    const [instructions, setInstructions] = useState([]);
     const [image, setImage] = useState(null);
 
+    const handleTitleChange = (e)=>{
+        setTitle(e.target.value)
+    }
+
+    const handleIngredientsChange = (e)=>{
+        setIngredients(e.target.value)
+    }
+
+    const handleInstructionChange = (e)=>{
+        setInstructions(e.target.value)
+    }
+
+    const hangleImage = (e)=>{
+        setImage(e.target.value)
+    }
     const handleSubmit = (e)=>{
         e.preventDefault();
         const formData = new FormData()
@@ -43,7 +58,7 @@ function AddRecipe() {
             <br />
             <input type="file" onChange={e => setImage(e.target.files[0])}/>
             <br />
-            <button type="submit">Add Recipe</button>
+            <button type="submit">Submit</button>
         </form>
   )
 }

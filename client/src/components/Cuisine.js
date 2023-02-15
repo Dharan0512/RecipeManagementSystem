@@ -80,7 +80,6 @@ function Cuisine(props) {
                     {/* <span className="fav"><MdFavoriteBorder/></span> */}
                     <img src={item.image} alt=""/> 
                     <h4>{item.title}</h4>
-                    <p>hi:tests</p>
                     </Link>
                 </Card>
             );
