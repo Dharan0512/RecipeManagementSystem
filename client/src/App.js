@@ -1,19 +1,26 @@
-import Pages from "./pages/Pages";
-import Category from "./components/Category";
+// import Pages from "./pages/Pages";
+// import Category from "./components/Category";
+// import Search from "./components/Search";
+// import { GiKnifeFork } from "react-icons/gi";
+// import UserProfile from "./components/UserProfile";
 import {BrowserRouter, Route, Routes} from "react-router-dom"
-import Search from "./components/Search";
 import styled from "styled-components";
-import { Link, HashRouter } from "react-router-dom";
-import { GiKnifeFork } from "react-icons/gi";
-import UserProfile from "./components/UserProfile";
-import Register from "./components/Register";
+import { Link} from "react-router-dom";
+import Register from "./pages/Register";
+import Searched from "./pages/Searched";
+import SharedLayout from "./components/SharedLayout";
+import { AnimatePresence } from "framer-motion";
+import Recipe from "./pages/Recipe";
+import Home from "./pages/Home";
+import Cuisine from "./components/Cuisine";
+
 function App() {
   const url = window.location.pathname
   console.log('url',url);
   
   return (
     <div className="App">
-      <BrowserRouter basename="/register">
+      {/* <BrowserRouter basename="/register">
           <Register/>
       </BrowserRouter>
       <BrowserRouter basename="/api">
@@ -25,7 +32,20 @@ function App() {
         <Search/>
         <Category/>
         <Pages />
-       </BrowserRouter>
+       </BrowserRouter> */}
+        <AnimatePresence exitBeforeEnter>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<SharedLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/cuisine/:type" element={<Cuisine />} />
+              <Route path="/searched/:search" element={<Searched />} />
+              <Route path="/recipe/:name" element={<Recipe />} />
+            </Route>
+            <Route path="/register" element={<Register />} />
+          </Routes>
+        </BrowserRouter>
+      </AnimatePresence>
     </div>
   );
 }

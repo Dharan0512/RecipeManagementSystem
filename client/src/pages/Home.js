@@ -1,5 +1,6 @@
 import Veggie from "../components/Veggie";
 import Popular from "../components/Popular";
+import UserRecipe from "../components/UserRecipe";
 import {motion} from "framer-motion"
 
 import React from 'react'
@@ -14,6 +15,7 @@ function Home() {
     >
         <Veggie/>
         <Popular/>
+        <UserRecipe/>
     </motion.div>
   )
 }

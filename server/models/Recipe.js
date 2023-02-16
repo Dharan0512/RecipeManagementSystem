@@ -6,10 +6,19 @@ const ingredientSchema = new mongoose.Schema({
         required: true,
     },
     amount: {
-        type: String,
+        type: Number,
         required: true,
+    },
+    metric: {
+        type: String,
     }
 });
+
+const instructionSchema = new mongoose.Schema({
+    step: {
+        type: String,
+    }
+})
 
 const RecipeSchema = new mongoose.Schema({
     title: {
@@ -29,10 +38,7 @@ const RecipeSchema = new mongoose.Schema({
             type: String,
         }, 
     },
-    instructions:{
-        type: Array,
-        required: true,
-    },
+    instructions:[instructionSchema],
     ingredient: [ingredientSchema],
     likes: {
         type: Number,

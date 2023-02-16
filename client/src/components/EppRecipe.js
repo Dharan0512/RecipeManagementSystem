@@ -92,10 +92,10 @@ function EppRecipe() {
     // .then((res)=>console.log(res.json()))
     // .catch((err)=>{console.log(err)});
 
-        await fetch("/api/submit-recipe", {
+        await fetch("http://localhost:4000/api/v1/recipe/upload", {
           method: "POST",
-          body: formData
-          
+          body: formData,
+          // headers: {'content-type':'multipart/form-data'}
         }, config)  .then((response) => response.json())
         .then((data) => {
           console.log("Form submitted successfully!");

@@ -9,9 +9,13 @@ import { json } from "express";
 //add Recipe
 
 const addRecipe = async (req, res) => {
+    const obj = JSON.parse(JSON.stringify(req.body));
+    console.log(req.file);
     
-    const {title, instructions, ingredients} = req.body;
-    console.log({title, instructions, ingredients });
+    
+     
+    const {title, instructions, ingredients} = obj;
+    console.log({"objs":title, instructions, ingredients });
     
     const name = req.file.originalname
     const type = req.file.mimetype
@@ -20,11 +24,13 @@ const addRecipe = async (req, res) => {
     if(!title ||  !instructions || !ingredients){
         throw new BadRequestError('please provide all values')
     }
-    const parsedIngredient = JSON.parse(ingredients)
+    // const parsedIngredient = JSON.parse(ingredients)
     
     const newRecipe = await recipe.create({
         title, image:{name: name, type: type, path: path },
-        instructions: instructions, ingredient: parsedIngredient,
+        instructions: [...instructions],
+        ingredient: [...ingredients]
+        
     });
     
     res.status(201).json({msg: "Recipe upload successfully"})
@@ -76,7 +82,6 @@ const singleRecipe = async(req, res) => {
 const allRecipe = async(req, res) => {
 
     const recipe = await Recipe.find()
-
 
     res.json({msg: recipe})
 }

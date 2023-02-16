@@ -6,25 +6,24 @@ import {addRecipe, updateRecipe, singleRecipe, allRecipe, deleteRecipe} from "..
 
 
 //TODO: study why its not working and why it return buffer..
-// const storage = multer.diskStorage({
-//     destination: function(req, file, cb){
-//         cb(null, './upload')
-//     },
+const storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null, 'public/images/')
+    },
     
-//     filename: function(req, file, cb){
-//             console.log('path',path.extname(file.filename));
-//            cb(null, path.extname(file.originalname)) 
-//         }
-// });
+    filename: function(req, file, cb){
+           cb(null, path.basename(file.originalname)+"." + 'jpeg') 
+        }
+});
 
 
-// const upload = multer({Storage: storage});
-const upload = multer({dest: 'public/images/'},{Storage: diskStorage({
-    filename: function(req,file,cb){
-        let ext = file.originalname.substring(file.originalname.lastIndexOf('.'), file.originalname.length)        
-        cb(null, new Date.now().toISOString() + ext)
-    }
-})});
+
+const upload = multer({storage: storage});
+// const upload = multer({dest: 'public/images/'},{Storage: diskStorage({
+//     filename: function(req,file,cb){
+//         cb(null, Date.now() + path.extname(file.originalname))
+//     }
+// })});
 
     // upload recipe
 router.route('/upload').post(upload.single('image'),addRecipe)

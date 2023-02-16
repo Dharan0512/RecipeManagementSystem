@@ -1,66 +1,72 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import {Splide, SplideSlide} from "@splidejs/react-splide"
 import '@splidejs/splide/dist/css/splide.min.css'
 import { Link } from "react-router-dom";
 import {MdFavoriteBorder, MdFavorite} from "react-icons/md"
-
-function Popular() {
-  const [popular, setPopular] = useState([]); //function allow to modify the variable
+import axios from "axios"
+function UserRecipe() {
+  const [veggie, setVeggie] = useState([]); //function allow to modify the variable
   const [favorties, setFavorites] = useState([])
-  const  getPopular = async ()=>{
+  // const [selectedImage, setSelectedImage] = useState(unFavoriteImage);
+  const  getVeggie = async ()=>{
 
-    const check = localStorage.getItem('popular');
-    // const check = 0
-    if(check){
-      setPopular(JSON.parse(check))
-    }else{      
+         
       const count = 20;
-      const key = '77c68ef76bc74460a33a631b601f508c';
-      // const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${key}&number=${count}`);
-      const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${key}&number=${count}`);
-      const data = await api.json();  
-      localStorage.setItem('popular',JSON.stringify(data.recipes))
-      setPopular(data.recipes)
-      console.log(data.recipes); 
-    }
+      const api = await axios.get(`http://localhost:4000/api/v1/recipe/`).then(data=>{
+         setVeggie(data.data.msg)
+
+      }).catch((err)=>{console.log(err)});
+      
+      console.log('userRecipe',veggie);
+    
   }
   useEffect(()=>{
-   getPopular();
+   getVeggie();
   },[])
-  console.log('populate',popular);
+
+  // const handleFavorites = useCallback((newImage)=>{
+  //   console.log('newImage',newImage.type.name);
+    
+  //   if(newImage.type.name == "MdFavorite"){
+  //    return  setSelectedImage(<MdFavoriteBorder/>)
+  //   }else if(newImage.type.name == "MdFavoriteBorder"){
+  //     return setSelectedImage(<MdFavorite/>)
+  //   }
+  // },[setSelectedImage])
 
  const toggleFavorite = (id)=>{
-  
-  if(favorties.includes(id)){
-    setFavorites(favorties.filter(f=> f !== id));
-    localStorage.removeItem("favorties",favorties[id])
-  }else{
-    localStorage.setItem("favorties",[...favorties,id])
-    setFavorites([...favorties,id])
-  }
+   
+   if(favorties.includes(id)){
+     setFavorites(favorties.filter(f=> f !== id));
+     localStorage.setItem("favorties",[...favorties])
+    }else{
+      localStorage.setItem("favorties",[...favorties,id])
+      setFavorites([...favorties,id])
+    }
+    console.log('fav',favorties,id);
  } 
   return (
     <div>
         <Wrapper>
-          <h3>Popular Picks</h3>
+          <h3>User Recipes</h3>
           <Splide options={{
-            perPage: 4,
+            perPage: 3,
             arrows: false,
             pagination: false,
             drag: "free",
-            gap: '3rem'
+            gap: '3rem',
           }}>
-          {popular.map((recipe)=>{
+          {veggie.map((recipe)=>{
             return(
               <SplideSlide key={recipe.id}>
                 <Card>
                 <span onClick={()=>{toggleFavorite(recipe.id)}} className="fav">{favorties.includes(recipe.id) ? <MdFavorite/> : <MdFavoriteBorder/>}</span>
-                  <Link to={'/recipe/'+recipe.id}>
-                    <p>{recipe.title}</p>
-                    <img src={recipe.image} alt={recipe.title}></img>
+                <Link to={"/recipe/"+recipe._id}>
+                  <p>{recipe.title}</p>
+                  <img src={`http://localhost:4000/static/${recipe.image.name}.jpeg`} alt={recipe.title}></img>
                   <Gradient/>
-                  </Link>
+                </Link>
                 </Card>
               </SplideSlide>
             );
@@ -69,16 +75,16 @@ function Popular() {
         </Wrapper>
     </div>
   )
-}
+};
 
 const Wrapper = styled.div`
-  margin: 4rem 0rem;
+    margin: 4rem 0rem;
   `
   const Card = styled.div`
-  min-height: 25rem;
-  border-radius: 2rem;
-  overflow: hidden;
-  position: relative;
+    min-height: 25rem;
+    border-radius: 2rem;
+    overflow: hidden;
+    position: relative;
   
   img{
     border-radius: 2rem;
@@ -102,12 +108,12 @@ const Wrapper = styled.div`
     font-size: 1rem;
     height: 40%
     display: flex;
-    justiy-content: center;
+    justify-content: center;
     align-items: center;
     margin-bottom: 2rem
   }
 
-   .fav{
+  .fav{
     position: absolute;
     z-index: 10;
     left: 50%;
@@ -125,6 +131,7 @@ const Wrapper = styled.div`
     margin-bottom: 22rem;
     margin-left: 1rem;
   }
+
 `;
 
 const Gradient = styled.div`
@@ -134,4 +141,5 @@ const Gradient = styled.div`
   height: 100%;
   background: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.5))
 `
-export default Popular
+
+export default UserRecipe

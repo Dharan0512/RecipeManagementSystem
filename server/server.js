@@ -2,8 +2,10 @@ import express from "express";
 import dotenv from "dotenv"
 dotenv.config();
 import morgan from "morgan";
+import cors from "cors"
 
 const app = express();
+
 
 
 import mongoSanitize from "express-mongo-sanitize";
@@ -38,7 +40,7 @@ if(process.env.NODE_ENV !== 'production'){
 app.use(express.json())
 app.use(mongoSanitize())
 app.use(cookieParser())
-
+app.use(cors())
 //serve static files
 app.use(express.static('public'))
 
@@ -46,9 +48,9 @@ app.use(express.static('public'))
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/recipe', recipeRoutes);
 
-// app.use('/static',express.static(path.join(__dirname,'public')))
+app.use('/static',express.static(path.join(__dirname,'public/images')))
 app.use('/image/',(req,res)=>{
-    res.send("sended")
+    res.send(express.static(path.join(__dirname, 'public')))
 })
 
 app.get('/',(req, res)=>{
