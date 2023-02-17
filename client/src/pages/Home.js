@@ -2,8 +2,9 @@ import Veggie from "../components/Veggie";
 import Popular from "../components/Popular";
 import UserRecipe from "../components/UserRecipe";
 import {motion} from "framer-motion"
-
 import React from 'react'
+import Category from "../components/Category";
+import Search from "../components/Search";
 
 function Home() {
   return (

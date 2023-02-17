@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import React from 'react'
+import axios from "axios";
 
 function Recipe() {
   let params = useParams();
@@ -16,20 +17,32 @@ function Recipe() {
     if(check){
        setDetails(JSON.parse(check))
     }else{    
-      try {
+      try{
         // const key = process.env.API_KEY;
+
         const key = '77c68ef76bc74460a33a631b601f508c';
         const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${key}`);
-        const detailData = await data.json();
-        console.log('detailsData',detailData);
+        let detailData; 
+        if(data.status === 200){
+          return detailData = await data.json()
+          // setDetails(detailData);
+       } 
+        if(data.status === 404){
+          const backData = await fetch(`http://localhost:4000/api/v1/recipe/${params.name}`)
+            return detailData = await backData.json();
+        }
+        
         
         localStorage.setItem('recipe',JSON.stringify(detailData))
-        setDetails(detailData);
-      } catch (error) {
-        console.log(error);        
+      }catch(err){
+        console.log(err);
+        
       }
+        // console.log('detailsData',details);
+     
     }
   }
+
   
   const fetchHtml = async()=>{
     // let check = localStorage.getItem('label');
@@ -52,6 +65,7 @@ function Recipe() {
   }
 
   useEffect(()=>{
+    fetchDetails().then(result => setDetails(result))
     fetchHtml().then(result => setHtml(result))
   },[])
 
@@ -59,7 +73,7 @@ function Recipe() {
     fetchDetails();
   },[params.name]);
   
-console.log('extendedrecipe',details.extendedIngredients);
+console.log('extendedrecipe',details);
 
   return (
     <DetailWrapper>

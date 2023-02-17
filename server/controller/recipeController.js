@@ -1,8 +1,7 @@
-import {BadRequestError} from "../errors/index.js"
+import {BadRequestError, NotFoundError} from "../errors/index.js"
 import recipe from "../models/Recipe.js"
 import {StatusCodes} from "http-status-codes";
 import Recipe from "../models/Recipe.js";
-import { json } from "express";
 
 //TODO: image should to un-comment
 
@@ -63,7 +62,7 @@ const updateRecipe = async(req, res) => {
 
         await recipe.save()
         
-    res.json({msg: title, instructions, ingredients})
+    res.json({msg: title, instructions, ingredients,id})
 }
 
 
@@ -73,8 +72,10 @@ const singleRecipe = async(req, res) => {
     console.log('req',req);
     
     const recipe = await Recipe.findById({_id: id})
-
-    res.json({msg: recipe})
+    if(!recipe){
+        throw new NotFoundError("Recipe not found")
+    }
+    res.status(StatusCodes.OK).json({title: recipe.title,image: `http://localhost:4000/static/${recipe.image.name}.jpeg`,summary: recipe.ingredient, instructions: [...recipe.instructions]})
 }
 
 
@@ -82,7 +83,8 @@ const singleRecipe = async(req, res) => {
 const allRecipe = async(req, res) => {
 
     const recipe = await Recipe.find()
-
+    console.log('recipe',recipe);
+    
     res.json({msg: recipe})
 }
 

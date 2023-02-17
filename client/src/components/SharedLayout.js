@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { GiKnifeFork } from "react-icons/gi";
 import UserProfile from "./UserProfile";
+import Search from "./Search";
+import Category from "./Category";
 const SharedLayout = () => {
   return (
     <div>
@@ -12,6 +14,8 @@ const SharedLayout = () => {
         <Logo to={"/"}>Recipe Management</Logo>
         <UserProfile className="profile" />
       </Nav>
+      <Search/>
+      <Category/>
       <Outlet />
     </div>
   );

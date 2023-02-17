@@ -47,6 +47,7 @@ function Register() {
     }
   };
 
+  useEffect(()=>{},[])
   return (
     <Wrapper className="full-page">
       <form className="form" onSubmit={onSubmit}>

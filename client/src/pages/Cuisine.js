@@ -93,12 +93,12 @@ const Card = styled.div`
     .fav{
     position: absolute;
     z-index: 10;
-    color: white;
+    color: black;
     font-size: 2rem;
     }
 
     .fav:hover{
-        color: red;
+        color: black;
     }
   }
 `;

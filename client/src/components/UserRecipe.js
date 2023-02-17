@@ -59,9 +59,9 @@ function UserRecipe() {
           }}>
           {veggie.map((recipe)=>{
             return(
-              <SplideSlide key={recipe.id}>
+              <SplideSlide key={recipe._id}>
                 <Card>
-                <span onClick={()=>{toggleFavorite(recipe.id)}} className="fav">{favorties.includes(recipe.id) ? <MdFavorite/> : <MdFavoriteBorder/>}</span>
+                <span onClick={()=>{toggleFavorite(recipe._id)}} className="fav">{favorties.includes(recipe._id) ? <MdFavorite/> : <MdFavoriteBorder/>}</span>
                 <Link to={"/recipe/"+recipe._id}>
                   <p>{recipe.title}</p>
                   <img src={`http://localhost:4000/static/${recipe.image.name}.jpeg`} alt={recipe.title}></img>

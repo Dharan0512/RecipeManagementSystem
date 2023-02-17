@@ -44,6 +44,11 @@ app.use(cors())
 //serve static files
 app.use(express.static('public'))
 
+ app.use((req, res, next)=> {
+     res.header("Access-Control-Allow-Origin", "*");
+     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+     next();
+});
 //routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/recipe', recipeRoutes);
