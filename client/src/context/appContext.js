@@ -60,6 +60,12 @@ const initialState = {
   totalJobs: 0,
   numOfPages: 1,
   page: 1,
+
+  //cart items
+  loading: false,
+  cart: cartItems,//get from backend
+  total: 0,
+  amount: 0,
 };
 
 const AppContext = React.createContext();
@@ -197,6 +203,28 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  //cart items
+  const clearCart = () => {
+    dispatch({ type: 'CLEAR_CART' })
+  }
+  const remove = (id) => {
+    dispatch({ type: 'REMOVE', payload: id })
+  }
+  const increase = (id) => {
+    dispatch({ type: 'INCREASE', payload: id })
+  }
+  const decrease = (id) => {
+    dispatch({ type: 'DECREASE', payload: id })
+  }
+  const fetchData = async () => {
+    dispatch({ type: 'LOADING' })
+    const response = await fetch(url)
+    const cart = await response.json()
+    dispatch({ type: 'DISPLAY_ITEMS', payload: cart })
+  }
+  const toggleAmount = (id, type) => {
+    dispatch({ type: 'TOGGLE_AMOUNT', payload: { id, type } })
+  }
   return (
     <AppContext.Provider
       value={{
@@ -210,6 +238,12 @@ const AppProvider = ({ children }) => {
         clearAlert,
         displayAlert,
         handleChange,
+        //cart
+        clearCart,
+        remove,
+        increase,
+        decrease,
+        toggleAmount,
       }}
     >
       {children}

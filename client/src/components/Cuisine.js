@@ -148,16 +148,16 @@ const Card = styled.div`
         text-align: center;
         padding: 1rem;
     }
-
     .fav{
     position: absolute;
     z-index: 10;
-    color: white;
+    color: black;
     font-size: 2rem;
+    font-weight: 600;
     }
 
     .fav:hover{
-        color: red;
+        color: black;
     }
   }
 `;
