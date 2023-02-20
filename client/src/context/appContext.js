@@ -63,7 +63,7 @@ const initialState = {
 
   //cart items
   loading: false,
-  cart: cartItems,//get from backend
+  cart: [],//get from backend
   total: 0,
   amount: 0,
 };
@@ -218,7 +218,7 @@ const AppProvider = ({ children }) => {
   }
   const fetchData = async () => {
     dispatch({ type: 'LOADING' })
-    const response = await fetch(url)
+    const response = await fetch()
     const cart = await response.json()
     dispatch({ type: 'DISPLAY_ITEMS', payload: cart })
   }

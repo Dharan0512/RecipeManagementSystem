@@ -8,10 +8,7 @@ import axios from "axios"
 function UserRecipe() {
   const [veggie, setVeggie] = useState([]); //function allow to modify the variable
   const [favorties, setFavorites] = useState([])
-  // const [selectedImage, setSelectedImage] = useState(unFavoriteImage);
   const  getVeggie = async ()=>{
-
-         
       const count = 20;
       const api = await axios.get(`http://localhost:4000/api/v1/recipe/`).then(data=>{
          setVeggie(data.data.msg)

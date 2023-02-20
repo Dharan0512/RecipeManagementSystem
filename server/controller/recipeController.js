@@ -68,20 +68,23 @@ const updateRecipe = async(req, res) => {
 
 //get single Recipe
 const singleRecipe = async(req, res) => {
+    
     const {id} = req.params
-    console.log('req',req);
+    console.log(id);
+    
     
     const recipe = await Recipe.findById({_id: id})
     if(!recipe){
         throw new NotFoundError("Recipe not found")
     }
-    res.status(StatusCodes.OK).json({title: recipe.title,image: `http://localhost:4000/static/${recipe.image.name}.jpeg`,summary: recipe.ingredient, instructions: [...recipe.instructions]})
+    console.log({title: recipe.title, extendedIngredients: recipe.original, instructions: [...recipe.instructions]})
+    res.status(StatusCodes.OK).json({msg:{title: recipe.title,image: `http://localhost:4000/static/${recipe.image.name}.jpeg`,extendedIngredients: recipe.original, instructions: [...recipe.instructions]}})
 }
 
 
 //get all recipe
 const allRecipe = async(req, res) => {
-
+    console.log('all recipe working');
     const recipe = await Recipe.find()
     console.log('recipe',recipe);
     

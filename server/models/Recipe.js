@@ -12,6 +12,7 @@ const ingredientSchema = new mongoose.Schema({
     metric: {
         type: String,
     }
+   
 });
 
 const instructionSchema = new mongoose.Schema({
@@ -39,7 +40,7 @@ const RecipeSchema = new mongoose.Schema({
         }, 
     },
     instructions:[instructionSchema],
-    ingredient: [ingredientSchema],
+    original: [ingredientSchema],
     likes: {
         type: Number,
     },

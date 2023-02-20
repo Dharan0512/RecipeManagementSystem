@@ -13,27 +13,15 @@ import { AnimatePresence } from "framer-motion";
 import Recipe from "./pages/Recipe";
 import Home from "./pages/Home";
 import Cuisine from "./components/Cuisine";
+import EppRecipe from "./components/EppRecipe";
+import URecipe from "./pages/URecipe";
 
 function App() {
   const url = window.location.pathname
-  console.log('url',url);
   
   return (
     <div className="App">
-      {/* <BrowserRouter basename="/register">
-          <Register/>
-      </BrowserRouter>
-      <BrowserRouter basename="/api">
-          <Nav>
-          <GiKnifeFork/>
-          <Logo to={"/"}>Recipe Management</Logo>
-          <UserProfile className="profile"/>
-      </Nav>
-        <Search/>
-        <Category/>
-        <Pages />
-       </BrowserRouter> */}
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence mode="wait">
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<SharedLayout />}>
@@ -42,7 +30,9 @@ function App() {
               <Route path="/searched/:search" element={<Searched />} />
               <Route path="/recipe/:name" element={<Recipe />} />
             </Route>
+              {/* <Route path="/userrecipe/:name" element={<URecipe/>}/> */}
             <Route path="/register" element={<Register />} />
+            <Route path="/addrecipe" element={<EppRecipe />} />
           </Routes>
         </BrowserRouter>
       </AnimatePresence>
