@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import React from 'react'
 import axios from "axios";
+import { useAppContext } from "../context/appContext";
 
 function Recipe() {
   let params = useParams();
@@ -10,7 +11,8 @@ function Recipe() {
   const [details, setDetails] = useState({});
   const [html, setHtml] = useState({__html: ""})
   const [activeTab, setActiveTab] = useState("instructions")
-  
+  const {cart} = useAppContext()
+
   const fetchDetails = async()=>{
       // const check = localStorage.getItem('recipe')
       // const check = 0;
@@ -31,17 +33,22 @@ function Recipe() {
         const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${key}`);
         let detailData; 
         if(data.status === 200){
-          return detailData = await data.json()
+          detailData = await data.json()
+          return setDetails(detailData)
+
         } 
         if(data.status === 404){
           
-          let backData = await axios.get(`http://localhost:4000/api/v1/recipe/${params.name}`).then(data=>{
-            console.log("msg",data.msg.data);
+          const backData = await fetch(`http://localhost:4000/api/v1/recipe/${params.name}`)
+          // .then(data=>{
+          //   console.log("msg",data.json());
+          //   setDetails(data.msg)}).catch((err)=>{console.log(err)});
             
-         setDetails(data.msg)}).catch((err)=>{console.log(err)});
-          // return detailData = await backData.json();
+          detailData = await backData.json();
+          console.log('dD',detailData.msg.title);
+          
+          return  setDetails(detailData.msg);
         }
-        // setDetails(detailData);
         
         
         localStorage.setItem('recipe',JSON.stringify(detailData))
@@ -63,14 +70,25 @@ function Recipe() {
       try {
         const key = '77c68ef76bc74460a33a631b601f508c';
         //nutrition fetch
+        if(params.name.length <= 7){ 
         const nutritionLabel = await fetch(`https://api.spoonacular.com/recipes/${params.name}/nutritionLabel?apiKey=${key}`)
         const labelData = await nutritionLabel.text();
         localStorage.setItem('label',JSON.stringify(labelData))
         return {__html: labelData}
+      }else {
+        return {__html: <h2>404 not found</h2>}
+      }
+        
       } catch (error) {
         console.log('labelerror',error);
       }
     }
+  }
+
+  const addCart = async (recipe)=>{
+    const {title,image,servings,pricePerServing} = recipe
+    console.log('reci',title, image, servings, pricePerServing);
+    
   }
   
   useEffect(()=>{
@@ -86,26 +104,31 @@ console.log('extendedrecipe',details);
 
   return (
     <>
-   {params.name.length > 6 ?
+   {params.name.length > 7 ?
    //user recipe loading
    <DetailWrapper>
       <div>
         <h2>{details.title}</h2>
          <img src={details.image} alt=""/>
+         <div>
+            <Button className={"active"} onClick={()=>{addCart(details)}}>Add Cart</Button>
+         </div>
+         <h2 className="label">Nutrition Label</h2>
+         <b>Not Found...</b>
       </div>
       <Info>
         <Button className={activeTab === "instructions" ? "active": ""} onClick={()=>setActiveTab('instructions')}>Instructions</Button>
         <Button className={activeTab === "ingredients" ? "active": ""} onClick={()=>setActiveTab('ingredients')}>Ingredients</Button>
-        {/* {activeTab === "instructions" && (
+        {activeTab === "instructions" && (
           <div>
-              <ul>
+              {/* <ul>
               { details.instructions.map((ingredient)=>{
                 console.log("log",ingredient);
                 return  <li key={ingredient.id}>name:{ingredient.step}</li>
               })}
-            </ul>
+            </ul> */}
           </div>
-        )} */}
+        )}
         
         {/* issues extended Ingredient html not working on tab */}
         
@@ -120,6 +143,7 @@ console.log('extendedrecipe',details);
           </div>
         
         )}
+
       </Info>
         
    </DetailWrapper> 
@@ -129,6 +153,9 @@ console.log('extendedrecipe',details);
       <div>
         <h2>{details.title}</h2>
         <img src={details.image} alt=""/>
+        <div>
+            <Button className={"active"} onClick={()=>{addCart(details)}}>Add Cart</Button>
+         </div>
         <h2 className="label">Nutrition Label</h2>
       <div dangerouslySetInnerHTML={html}/>
       </div>

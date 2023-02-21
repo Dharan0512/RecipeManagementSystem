@@ -9,12 +9,12 @@ import Recipe from "../models/Recipe.js";
 
 const addRecipe = async (req, res) => {
     const obj = JSON.parse(JSON.stringify(req.body));
-    console.log(req.file);
+    console.log(obj)
     
     
      
-    const {title, instructions, ingredients} = obj;
-    console.log({"objs":title, instructions, ingredients });
+    const {title, servings, pricePerServing, preparationInMin, instructions, ingredients} = obj;
+    console.log({"objs":title, servings, pricePerServing, preparationInMin, instructions, ingredients });
     
     const name = req.file.originalname
     const type = req.file.mimetype
@@ -27,9 +27,11 @@ const addRecipe = async (req, res) => {
     
     const newRecipe = await recipe.create({
         title, image:{name: name, type: type, path: path },
+        servings: servings,
+        pricePerServing: pricePerServing,
+        readyInMinutes: preparationInMin,
         instructions: [...instructions],
         ingredient: [...ingredients]
-        
     });
     
     res.status(201).json({msg: "Recipe upload successfully"})

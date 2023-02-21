@@ -19,7 +19,7 @@ function UserRecipe() {
     
   }
   useEffect(()=>{
-   getVeggie();
+   getVeggie()
   },[])
 
   // const handleFavorites = useCallback((newImage)=>{

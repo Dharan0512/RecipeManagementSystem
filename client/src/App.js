@@ -15,6 +15,7 @@ import Home from "./pages/Home";
 import Cuisine from "./components/Cuisine";
 import EppRecipe from "./components/EppRecipe";
 import URecipe from "./pages/URecipe";
+import CartContainer from "./components/CartContainer";
 
 function App() {
   const url = window.location.pathname
@@ -29,10 +30,11 @@ function App() {
               <Route path="/cuisine/:type" element={<Cuisine />} />
               <Route path="/searched/:search" element={<Searched />} />
               <Route path="/recipe/:name" element={<Recipe />} />
+              <Route path="/addrecipe" element={<EppRecipe />} />
+              <Route path="/cart/:id" element={<CartContainer />} />
             </Route>
               {/* <Route path="/userrecipe/:name" element={<URecipe/>}/> */}
             <Route path="/register" element={<Register />} />
-            <Route path="/addrecipe" element={<EppRecipe />} />
           </Routes>
         </BrowserRouter>
       </AnimatePresence>

@@ -6,6 +6,7 @@ import {
     REGISTER_USER_BEGIN,
     REGISTER_USER_ERROR,
     REGISTER_USER_SUCCESS,
+    TOGGLE_AMOUNT
   } from "./action";
   
   import { initialState } from "./appContext";
@@ -121,7 +122,8 @@ import {
       }
     )
     total = parseFloat(total.toFixed(2))
-
+      console.log('total',total,'am',amount);
+      
     return { ...state, total, amount }
   }
   if (action.type === 'LOADING') {
@@ -130,7 +132,7 @@ import {
   if (action.type === 'DISPLAY_ITEMS') {
     return { ...state, cart: action.payload, loading: false }
   }
-  if (action.type === 'TOGGLE_AMOUNT') {
+  if (action.type === TOGGLE_AMOUNT) {
     let tempCart = state.cart
     .map((cartItem) => {
       if (cartItem.id === action.payload.id) {

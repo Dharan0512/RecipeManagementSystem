@@ -39,6 +39,15 @@ const RecipeSchema = new mongoose.Schema({
             type: String,
         }, 
     },
+    servings: {
+        type: Number,
+    },
+    pricePerServing: {
+        type: Number,
+    },
+    readyInMinutes: {
+        type: Number
+    },
     instructions:[instructionSchema],
     original: [ingredientSchema],
     likes: {

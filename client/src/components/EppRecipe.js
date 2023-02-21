@@ -5,7 +5,9 @@ function EppRecipe() {
     const [image, setImage] = useState(null);
     const [instructions, setInstructions] = useState([{step: ""}]);
     const [ingredients, setIngredients] = useState([{name: "", amount: "", metric: ""}]);
-
+    const [servings, setServings] = useState(Number);
+    const [pricePerServing,setPricePerServing] = useState(Number)
+    const [preparationTime, setPreparationTime] = useState(Number)
     let addFormField = ()=>{
       setIngredients([...ingredients, {name: "", amount: ""}])
     }
@@ -49,8 +51,17 @@ function EppRecipe() {
         setInstructions(newInstructions);
     };
 
-    
+    const handleServing = (e)=>{
+      setServings(e.target.value)
+    }
 
+    const handlePerServing = (e)=>{
+      setPricePerServing(e.target.value)
+    }
+
+    const handlePreparation = (e)=>{
+      setPreparationTime(e.target.value)
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -61,7 +72,9 @@ function EppRecipe() {
     formData.append("title", title);
     
     formData.append("image", image);
-    
+    formData.append("servings",servings)
+    formData.append("pricePerServing",pricePerServing)
+    formData.append("preparationInMin",preparationTime)
     // append the instructions and ingredients data to the form data
 
     instructions.forEach((instruction, index) => {
@@ -149,10 +162,23 @@ function EppRecipe() {
               </div>
             ))}
        
-         <div className="button-section">
+          <div className="button-section">
               <button className="button add" type="button" onClick={() => addInsFormField()}>Add</button>
+          </div>
         </div>
-      </div>
+        <div>
+          <label>Servings</label>
+          <input type="number" id='serving' placeholder='approx serving' className="form-inline pad" onChange={(e)=>handleServing(e)}></input>
+        </div>
+        {/* price per servings */}
+        <div>
+          <label>Price per Servings</label>
+          <input type="number" id='pricePerServing' placeholder='approx price for per serving' className="form-inline pad" onChange={(e)=>handlePerServing(e)}></input>
+        </div>
+         <div>
+          <label>Preparation in Min</label>
+          <input type="number" id='preparationInMin' placeholder='min' className="form-inline pad" onChange={(e)=>handlePreparation(e)}></input>
+        </div>
       <div>
         <label htmlFor="ingredients">Ingredients</label>
         {ingredients.map((ingredient, index) => (

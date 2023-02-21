@@ -1,6 +1,7 @@
 import { useEffect, useReducer, useContext } from "react";
 import React from "react";
 import axios from "axios";
+import data from "../utils/data";
 import { toast } from "react-toastify";
 import reducer from "./reducer";
 import {
@@ -18,8 +19,10 @@ import {
   REGISTER_USER_BEGIN,
   REGISTER_USER_ERROR,
   REGISTER_USER_SUCCESS,
+  TOGGLE_AMOUNT
 } from "./action";
 
+const url = 'https://course-api.com/react-useReducer-cart-project'
 const initialState = {
   //Filter data
   proteinValue: 0,
@@ -37,7 +40,7 @@ const initialState = {
   user: JSON.parse(localStorage.getItem("user")),
   token: localStorage.getItem("token"),
   userLocation: localStorage.getItem("location"),
-  // jobs
+  // upgrade recipe plans
   isEditing: false,
   editJobId: "",
   position: "",
@@ -45,10 +48,10 @@ const initialState = {
   jobLocation: "",
   jobTypeOptions: ["full-time", "part-time", "remote", "internship"],
   jobType: "full-time",
-  statusOptions: ["pending", "interview", "declined"],
+  statusOptions: ["pending", "approved", "declined"],
   status: "pending",
 
-  // search jobs container
+  // search recipe container
   search: "",
   searchStatus: "all",
   searchType: "all",
@@ -66,6 +69,9 @@ const initialState = {
   cart: [],//get from backend
   total: 0,
   amount: 0,
+
+  //favourites
+  fav: []
 };
 
 const AppContext = React.createContext();
@@ -223,8 +229,14 @@ const AppProvider = ({ children }) => {
     dispatch({ type: 'DISPLAY_ITEMS', payload: cart })
   }
   const toggleAmount = (id, type) => {
-    dispatch({ type: 'TOGGLE_AMOUNT', payload: { id, type } })
+    dispatch({ type: TOGGLE_AMOUNT, payload: { id, type } })
   }
+
+  //favorites;
+  useEffect(()=>{
+    dispatch({type: 'GET_TOTALS'})
+  },[state.cart])
+
   return (
     <AppContext.Provider
       value={{

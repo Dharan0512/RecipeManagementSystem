@@ -8,12 +8,14 @@ import { TbPizzaOff, TbPizza } from "react-icons/tb";
 import { Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import Popup from "reactjs-popup"
+import { useAppContext } from "../context/appContext";
 
 
-function UserProfile(props) {
-
+function UserProfile() {
+const {user} = useAppContext()
 const isLogin = localStorage.getItem("user");
-console.log('value',isLogin);
+// const user = JSON.parse(isLogin)
+console.log('value',isLogin,user);
   const logout = async () => {
     console.log("logout called");
     
@@ -23,15 +25,22 @@ console.log('value',isLogin);
   };
 
   useEffect(()=>{
-  },[logout])
+  },[logout, user])
   return (
     <DIV className="profile">
       {isLogin ? <TbPizza/> :<TbPizzaOff/>}
       {isLogin ? (
-        <Popup trigger={<Button>Log Out</Button>} position="right center" className="red">
+        <Popup trigger={<Button>{user.name}</Button>} position="right center" className="red">
         <Button>Favorites</Button>
-        <Button>Cart</Button>
-        <Button>Orders</Button>
+        <Link to={"/addrecipe"}>
+          <Button>Add Recipe</Button>
+        </Link>
+        <Link to={"/ownrecipe"}>
+          <Button>My Recipe</Button>
+        </Link>
+        <Link to={`/cart/${user._id}`}>
+          <Button>Cart</Button>
+        </Link>
         <Button onClick={()=> logout()}>LogOut</Button>
         </Popup>
         // <Button onClick={() => logout()}>LOG OUT</Button>

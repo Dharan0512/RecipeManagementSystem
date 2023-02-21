@@ -12,3 +12,12 @@ const userContext = createContext()
 
 // set provider in parent 
 <userContext.provider value={//state..}>
+
+TODO: backend {
+    pricePerserving and serving in dish,
+
+}
+
+TODO: frontend {
+    add recipe pricePerserving and serving in dish
+}
