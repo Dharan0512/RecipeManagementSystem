@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 import {StatusCodes} from "http-status-codes";
 import {BadRequestError, UnAuthenticatedError}  from "../errors/index.js"
-import attachCookie from "../utils/attachCookie.js"
+// import attachCookie from "../utils/attachCookie.js"
 
 const register = async (req, res) => {
     const {name, lastname, email, password, location} = req.body;
@@ -18,7 +18,7 @@ const register = async (req, res) => {
     const user = await User.create({name, lastname, email, password, location})
 
     const token = user.createJWT();
-    attachCookie({res, token});
+    // attachCookie({res, token});
 
     res.status(StatusCodes.CREATED).json({
         user: {
@@ -27,6 +27,7 @@ const register = async (req, res) => {
             location: user.location,
             name: user.name,
         },
+        token,
 
 
     });
@@ -34,6 +35,8 @@ const register = async (req, res) => {
 
 const login = async (req, res) =>{
     const {email, password} = req.body;
+    console.log("from login",req);
+    
     if(!email || !password){
         throw new BadRequestError("Please provide all values")
     }
@@ -49,10 +52,10 @@ const login = async (req, res) =>{
     }
 
     const token = user.createJWT();
-    attachCookie({res,token})
+    // attachCookie({res,token})
     user.password = undefined;
 
-    res.status(StatusCodes.OK).json({user, location: user.location})
+    res.status(StatusCodes.OK).json({user, location: user.location, token})
 }
 
 const updateUser = async (req, res) => {
@@ -70,7 +73,7 @@ const updateUser = async (req, res) => {
     await user.save();
 
     const token = user.createJWT();
-    attachCookie({res, token})
+    // attachCookie({res, token})
 
     res.status(StatusCodes.OK).json({"User Updated Successfully":user})
 }

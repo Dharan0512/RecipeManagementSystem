@@ -3,7 +3,7 @@ const router = express.Router()
 import multer, { diskStorage } from "multer";
 import path from "path"
 import {addRecipe, updateRecipe, singleRecipe, allRecipe, deleteRecipe} from "../controller/recipeController.js"
-
+import auth from "../middleware/auth.js"
 
 //TODO: study why its not working and why it return buffer..
 const storage = multer.diskStorage({
@@ -26,7 +26,7 @@ const upload = multer({storage: storage});
 // })});
 
     // upload recipe
-router.route('/upload').post(upload.single('image'),addRecipe)
+router.route('/upload').post(auth,upload.single('image'),addRecipe)
 
     //get all recipe
 router.route('/').get(allRecipe)

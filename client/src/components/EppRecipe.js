@@ -1,5 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import Wrapper from "../assets/wrappers/AddRecipe"
+import { useAppContext } from '../context/appContext';
 function EppRecipe() {
      const [title, setTitle] = useState("");
     const [image, setImage] = useState(null);
@@ -8,6 +9,7 @@ function EppRecipe() {
     const [servings, setServings] = useState(Number);
     const [pricePerServing,setPricePerServing] = useState(Number)
     const [preparationTime, setPreparationTime] = useState(Number)
+    const {token} = useAppContext()
     let addFormField = ()=>{
       setIngredients([...ingredients, {name: "", amount: ""}])
     }
@@ -96,8 +98,7 @@ function EppRecipe() {
       console.log('formdata',formData);
       
       const config = {     
-      headers: { 'content-type': 'multipart/form-data' }
-      }
+      headers: { 'content-type': 'multipart/form-data'}}
     
     // make a fetch request to submit the form data
     console.log('image',formData);

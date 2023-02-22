@@ -1,14 +1,14 @@
 import React from 'react'
 import { useAppContext } from '../context/appContext'
 
-const CartItem = ({ id, img, title, price, amount }) => {
+const CartItem = ({ id, image, title, pricePerServing, servings, amount }) => {
   const { remove, increase, decrease, toggleAmount } = useAppContext()
   return (
     <article className='cart-item'>
-      <img src={img} alt={title} />
+      <img src={image} alt={title} />
       <div>
         <h4>{title}</h4>
-        <h4 className='item-price'>${price}</h4>
+        <h4 className='item-price'>{`\u20B9`}{pricePerServing * servings}</h4>
         {/* remove button */}
         <button className='remove-btn' onClick={() => remove(id)}>
           remove

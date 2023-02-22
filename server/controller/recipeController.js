@@ -9,7 +9,7 @@ import Recipe from "../models/Recipe.js";
 
 const addRecipe = async (req, res) => {
     const obj = JSON.parse(JSON.stringify(req.body));
-    console.log(obj)
+    console.log(req)
     
     
      
@@ -32,6 +32,7 @@ const addRecipe = async (req, res) => {
         readyInMinutes: preparationInMin,
         instructions: [...instructions],
         ingredient: [...ingredients]
+        
     });
     
     res.status(201).json({msg: "Recipe upload successfully"})
@@ -80,7 +81,7 @@ const singleRecipe = async(req, res) => {
         throw new NotFoundError("Recipe not found")
     }
     console.log({title: recipe.title, extendedIngredients: recipe.original, instructions: [...recipe.instructions]})
-    res.status(StatusCodes.OK).json({msg:{title: recipe.title,image: `http://localhost:4000/static/${recipe.image.name}.jpeg`,extendedIngredients: recipe.original, instructions: [...recipe.instructions]}})
+    res.status(StatusCodes.OK).json({msg:{title: recipe.title,image: `http://localhost:4000/static/${recipe.image.name}.jpeg`,servings: recipe.servings,pricePerServing: recipe.pricePerServing,readyInMinutes: recipe.readyInMinutes,extendedIngredients: recipe.original, instructions: [...recipe.instructions], amount: recipe.amount}})
 }
 
 

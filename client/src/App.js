@@ -1,6 +1,5 @@
 // import Pages from "./pages/Pages";
-import Category from "./components/Category";
-import Search from "./components/Search";
+
 // import { GiKnifeFork } from "react-icons/gi";
 // import UserProfile from "./components/UserProfile";
 import {BrowserRouter, Route, Routes} from "react-router-dom"
@@ -14,12 +13,20 @@ import Recipe from "./pages/Recipe";
 import Home from "./pages/Home";
 import Cuisine from "./components/Cuisine";
 import EppRecipe from "./components/EppRecipe";
-import URecipe from "./pages/URecipe";
 import CartContainer from "./components/CartContainer";
+import { useAppContext } from "./context/appContext";
+import { useEffect } from "react";
 
 function App() {
   const url = window.location.pathname
-  
+  const {setAuthCookies} = useAppContext()
+  useEffect(()=>{
+    const cookies ={
+      authToken: localStorage.getItem('token'),
+      csrfToken:  'IBIWF_SES_AUTH_TOKEN'
+    }
+    setAuthCookies(cookies)
+  },[setAuthCookies])
   return (
     <div className="App">
         <AnimatePresence mode="wait">

@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { AppProvider } from './context/appContext';
+import {CookiesProvider} from "react-cookie"
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <AppProvider>
+    <CookiesProvider>
         <App/>
+    </CookiesProvider>
     </AppProvider>
   </React.StrictMode>
 );

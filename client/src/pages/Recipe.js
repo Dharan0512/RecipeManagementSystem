@@ -4,14 +4,14 @@ import { useParams } from "react-router-dom";
 import React from 'react'
 import axios from "axios";
 import { useAppContext } from "../context/appContext";
-
+import {IoMdTimer} from "react-icons/io"
 function Recipe() {
   let params = useParams();
 
   const [details, setDetails] = useState({});
   const [html, setHtml] = useState({__html: ""})
   const [activeTab, setActiveTab] = useState("instructions")
-  const {cart} = useAppContext()
+  const {addToCart} = useAppContext()
 
   const fetchDetails = async()=>{
       // const check = localStorage.getItem('recipe')
@@ -88,7 +88,10 @@ function Recipe() {
   const addCart = async (recipe)=>{
     const {title,image,servings,pricePerServing} = recipe
     console.log('reci',title, image, servings, pricePerServing);
-    
+    if(!recipe.amount){
+      recipe.amount = 1
+    }
+    addToCart(recipe)
   }
   
   useEffect(()=>{
@@ -100,7 +103,7 @@ function Recipe() {
     fetchDetails();
   },[]);
   
-console.log('extendedrecipe',details);
+console.log('extendedrecipe',details,details.readyInMinutes);
 
   return (
     <>
@@ -110,9 +113,13 @@ console.log('extendedrecipe',details);
       <div>
         <h2>{details.title}</h2>
          <img src={details.image} alt=""/>
-         <div>
-            <Button className={"active"} onClick={()=>{addCart(details)}}>Add Cart</Button>
-         </div>
+         <Flex>
+          <span className="icon">
+          <IoMdTimer size={50}/>{'\u00A0'}
+          <b className="fsize">{details.readyInMinutes}Mins</b>
+          </span>
+          <Button className={"active"} onClick={()=>{addCart(details)}}>Add Cart</Button>
+         </Flex>
          <h2 className="label">Nutrition Label</h2>
          <b>Not Found...</b>
       </div>
@@ -141,9 +148,8 @@ console.log('extendedrecipe',details);
               })}
             </ul>
           </div>
-        
-        )}
 
+        )}
       </Info>
         
    </DetailWrapper> 
@@ -153,9 +159,13 @@ console.log('extendedrecipe',details);
       <div>
         <h2>{details.title}</h2>
         <img src={details.image} alt=""/>
-        <div>
-            <Button className={"active"} onClick={()=>{addCart(details)}}>Add Cart</Button>
-         </div>
+         <Flex>
+          <span className="icon">
+          <IoMdTimer size={50}/>{'\u00A0'}
+          <b className="fsize">{details.readyInMinutes}Mins</b>
+          </span>
+          <Button className={"active"} onClick={()=>{addCart(details)}}>Add Cart</Button>
+         </Flex>
         <h2 className="label">Nutrition Label</h2>
       <div dangerouslySetInnerHTML={html}/>
       </div>
@@ -221,5 +231,16 @@ const Button = styled.button`
 const Info = styled.div`
   margin-left: 10rem;
 `
+const Flex = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 
+  margin-top: 5%;
+
+  .fsize{
+    font-size: 1.5em;
+  }
+
+`
 export default Recipe

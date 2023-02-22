@@ -3,7 +3,7 @@ import { UnAuthenticatedError } from "../errors/index.js"
 
 
 const auth = async (req, res, next)=>{
-    console.log('auth middleware');
+    console.log('auth middleware',req.headers);
     
     const token = req.cookies.token;
     if(!token){

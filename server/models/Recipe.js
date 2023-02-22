@@ -48,6 +48,10 @@ const RecipeSchema = new mongoose.Schema({
     readyInMinutes: {
         type: Number
     },
+    amount: {
+        type: Number,
+        default: 1,
+    },
     instructions:[instructionSchema],
     original: [ingredientSchema],
     likes: {

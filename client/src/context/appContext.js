@@ -1,8 +1,6 @@
 import { useEffect, useReducer, useContext } from "react";
 import React from "react";
 import axios from "axios";
-import data from "../utils/data";
-import { toast } from "react-toastify";
 import reducer from "./reducer";
 import {
   CHANGE_PAGE,
@@ -21,7 +19,6 @@ import {
   REGISTER_USER_SUCCESS,
   TOGGLE_AMOUNT
 } from "./action";
-
 const url = 'https://course-api.com/react-useReducer-cart-project'
 const initialState = {
   //Filter data
@@ -66,10 +63,9 @@ const initialState = {
 
   //cart items
   loading: false,
-  cart: [],//get from backend
+  cart: [],//get data from backend
   total: 0,
   amount: 0,
-
   //favourites
   fav: []
 };
@@ -94,11 +90,13 @@ const AppProvider = ({ children }) => {
   };
 
   const authFetch = axios.create({
-    baseURL: "/api/v1",
+    baseURL: "http://localhost:4000/api/v1",
   });
   // request
   authFetch.interceptors.request.use(
     (config) => {
+      console.log('authfetch its works');
+      
       config.headers["Authorization"] = `Bearer ${state.token}`;
 
       return config;
@@ -209,7 +207,18 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+const setAuthCookies = (cookies)=>{
+  axios.defaults.headers.common['Authorization'] = `Bearer ${cookies.authToken}`;
+  axios.defaults.headers.common['X-CSRF-Token'] = cookies.csrfToken;
+}
+
   //cart items
+  const addToCart = (item)=>{
+    console.log('app');
+    
+    dispatch({type: 'ADD_TO_CART', payload: item})
+  }
+
   const clearCart = () => {
     dispatch({ type: 'CLEAR_CART' })
   }
@@ -243,6 +252,7 @@ const AppProvider = ({ children }) => {
         ...state,
         getFilter,
         loginUser,
+        setAuthCookies,
         registerUser,
         clearValues,
         clearFilters,
@@ -251,6 +261,7 @@ const AppProvider = ({ children }) => {
         displayAlert,
         handleChange,
         //cart
+        addToCart,
         clearCart,
         remove,
         increase,

@@ -6,7 +6,9 @@ import {
     REGISTER_USER_BEGIN,
     REGISTER_USER_ERROR,
     REGISTER_USER_SUCCESS,
-    TOGGLE_AMOUNT
+    TOGGLE_AMOUNT,
+    ADD_TO_CART,
+    GET_TOTALS
   } from "./action";
   
   import { initialState } from "./appContext";
@@ -65,7 +67,6 @@ import {
         user,
         token,
         userLocation: location,
-        jobLocation: location,
       };
     }
   
@@ -106,11 +107,11 @@ import {
       .filter((cartItem) => cartItem.amount !== 0)
     return { ...state, cart: tempCart }
   }
-  if (action.type === 'GET_TOTALS') {
+  if (action.type === GET_TOTALS) {
     let { total, amount } = state.cart.reduce(
       (cartTotal, cartItem) => {
-        const { price, amount } = cartItem
-        const itemTotal = price * amount
+        const { pricePerServing, servings, amount } = cartItem
+        const itemTotal = (pricePerServing * servings) * amount
 
         cartTotal.total += itemTotal
         cartTotal.amount += amount
@@ -131,6 +132,15 @@ import {
   }
   if (action.type === 'DISPLAY_ITEMS') {
     return { ...state, cart: action.payload, loading: false }
+  }
+  //Add cart item TODO:
+  if(action.type === ADD_TO_CART){
+    console.log('reducer');
+    
+    return{
+      ...state,
+      cart: [...state.cart, action.payload]
+    }
   }
   if (action.type === TOGGLE_AMOUNT) {
     let tempCart = state.cart
