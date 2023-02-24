@@ -504,6 +504,10 @@ hr {
   margin-top: 2.25rem;
   border-radius: var(--radius);
 }
+.padpaybtn {
+  margin-top: 7%;
+  margin-left: 3%;
+}
 .clear-btn:hover {
   background: var(--clr-red-light);
   color: var(--clr-red-dark);

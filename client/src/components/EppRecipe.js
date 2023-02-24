@@ -9,7 +9,7 @@ function EppRecipe() {
     const [servings, setServings] = useState(Number);
     const [pricePerServing,setPricePerServing] = useState(Number)
     const [preparationTime, setPreparationTime] = useState(Number)
-    const {token} = useAppContext()
+    const { setAuthCookies, token} = useAppContext()
     let addFormField = ()=>{
       setIngredients([...ingredients, {name: "", amount: ""}])
     }
@@ -98,7 +98,8 @@ function EppRecipe() {
       console.log('formdata',formData);
       
       const config = {     
-      headers: { 'content-type': 'multipart/form-data'}}
+      headers: { 'content-type': 'multipart/form-data'}
+    }
     
     // make a fetch request to submit the form data
     console.log('image',formData);
@@ -109,7 +110,7 @@ function EppRecipe() {
         await fetch("http://localhost:4000/api/v1/recipe/upload", {
           method: "POST",
           body: formData,
-          // headers: {'content-type':'multipart/form-data'}
+          headers: {'Authorization': `Bearer ${token}`}
         }, config)  .then((response) => response.json())
         .then((data) => {
           console.log("Form submitted successfully!");
@@ -124,6 +125,15 @@ function EppRecipe() {
         useEffect(()=>{
 
         },[ingredients, instructions])
+
+        
+  useEffect(()=>{
+    const cookies ={
+      authToken: localStorage.getItem('token'),
+      csrfToken:  'IBIWF_SES_AUTH_TOKEN'
+    }
+    setAuthCookies(cookies)
+  },[setAuthCookies])
 
   return (
       <Wrapper>
@@ -210,6 +220,7 @@ function EppRecipe() {
               >
                 <option value=""></option>
                 <option value="pcs">piece</option>
+                <option value="Kg">Kg</option>
                 <option value="gram">gram</option>
                 <option value="teaspoon">Teaspoon</option>
                 <option value="bowl">Bowl</option>

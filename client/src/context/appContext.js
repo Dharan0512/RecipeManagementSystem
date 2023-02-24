@@ -2,6 +2,7 @@ import { useEffect, useReducer, useContext } from "react";
 import React from "react";
 import axios from "axios";
 import reducer from "./reducer";
+import {toast} from "react-toastify"
 import {
   CHANGE_PAGE,
   CLEAR_ALERT,
@@ -17,7 +18,8 @@ import {
   REGISTER_USER_BEGIN,
   REGISTER_USER_ERROR,
   REGISTER_USER_SUCCESS,
-  TOGGLE_AMOUNT
+  TOGGLE_AMOUNT,
+  IS_CARTED
 } from "./action";
 const url = 'https://course-api.com/react-useReducer-cart-project'
 const initialState = {
@@ -66,6 +68,7 @@ const initialState = {
   cart: [],//get data from backend
   total: 0,
   amount: 0,
+
   //favourites
   fav: []
 };
@@ -90,7 +93,7 @@ const AppProvider = ({ children }) => {
   };
 
   const authFetch = axios.create({
-    baseURL: "http://localhost:4000/api/v1",
+    baseURL: "/api/v1",
   });
   // request
   authFetch.interceptors.request.use(
@@ -143,15 +146,18 @@ const AppProvider = ({ children }) => {
   const clearValues = () => {
     dispatch({ type: CLEAR_VALUES });
   };
-  const clearAlert = () => {
-    dispatch({ type: CLEAR_ALERT });
+  const clearAlert = (msg) => {
+    setTimeout(()=>{
+
+      dispatch({ type: CLEAR_ALERT, payload: {msg} });
+    },3000)
   };
 
   const clearFilters = () => {
     dispatch({ type: CLEAR_FILTERS });
   };
-  const displayAlert = () => {
-    dispatch({ type: DISPLAY_ALERT });
+  const displayAlert = (msg) => {
+    dispatch({ type: DISPLAY_ALERT, payload: {msg} });
     clearAlert();
   };
 
@@ -241,10 +247,15 @@ const setAuthCookies = (cookies)=>{
     dispatch({ type: TOGGLE_AMOUNT, payload: { id, type } })
   }
 
+  const isCarted = ()=>{
+    dispatch({type: IS_CARTED, payload: !state.isActive})
+  }
+  
+
   //favorites;
   useEffect(()=>{
     dispatch({type: 'GET_TOTALS'})
-  },[state.cart])
+  },[state.cart, state.isActive])
 
   return (
     <AppContext.Provider
@@ -267,6 +278,7 @@ const setAuthCookies = (cookies)=>{
         increase,
         decrease,
         toggleAmount,
+        isCarted
       }}
     >
       {children}

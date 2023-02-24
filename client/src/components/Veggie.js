@@ -7,6 +7,7 @@ import {MdFavoriteBorder, MdFavorite} from "react-icons/md"
 function Veggie() {
   const [veggie, setVeggie] = useState([]); //function allow to modify the variable
   const [favorties, setFavorites] = useState([])
+  const [favId, setFavId] = useState([])
   // const [selectedImage, setSelectedImage] = useState(unFavoriteImage);
   const  getVeggie = async ()=>{
 
@@ -40,16 +41,19 @@ function Veggie() {
   //   }
   // },[setSelectedImage])
 
- const toggleFavorite = (id)=>{
-   
-   if(favorties.includes(id)){
+ const toggleFavorite = (recipe)=>{
+   let {id, image, title } = recipe
+   let res = {id, image, title}
+   if(favId.includes(id)){
+     setFavId(favId.filter(f=>f !== id));
      setFavorites(favorties.filter(f=> f !== id));
-     localStorage.setItem("favorties",[...favorties])
+     localStorage.setItem("vegfav",[res])
     }else{
-      localStorage.setItem("favorties",[...favorties,id])
-      setFavorites([...favorties,id])
+      localStorage.setItem("vegfav",[...favorties,{id,image,title}])
+      setFavorites([...favorties,{id,image,title}])
+      setFavId([...favId, id])
     }
-    console.log('fav',favorties,id);
+    console.log('fav',favorties);
  } 
   return (
     <div>
@@ -66,7 +70,7 @@ function Veggie() {
             return(
               <SplideSlide key={recipe.id}>
                 <Card>
-                <span onClick={()=>{toggleFavorite(recipe.id)}} className="fav">{favorties.includes(recipe.id) ? <MdFavorite/> : <MdFavoriteBorder/>}</span>
+                {/* <span onClick={()=>{toggleFavorite(recipe)}} className="fav">{favId.includes(recipe.id) ? <MdFavorite/> : <MdFavoriteBorder/>}</span> */}
                 <Link to={"/recipe/"+recipe.id}>
                   <p>{recipe.title}</p>
                   <img src={recipe.image} alt={recipe.title}></img>

@@ -36,9 +36,9 @@ function UserRecipe() {
    
    if(favorties.includes(id)){
      setFavorites(favorties.filter(f=> f !== id));
-     localStorage.setItem("favorties",[...favorties])
+     localStorage.setItem("usrFav",[...favorties])
     }else{
-      localStorage.setItem("favorties",[...favorties,id])
+      localStorage.setItem("usrFav",[...favorties,id])
       setFavorites([...favorties,id])
     }
     console.log('fav',favorties,id);
@@ -58,7 +58,7 @@ function UserRecipe() {
             return(
               <SplideSlide key={recipe._id}>
                 <Card>
-                <span onClick={()=>{toggleFavorite(recipe._id)}} className="fav">{favorties.includes(recipe._id) ? <MdFavorite/> : <MdFavoriteBorder/>}</span>
+                {/* <span onClick={()=>{toggleFavorite(recipe._id)}} className="fav">{favorties.includes(recipe._id) ? <MdFavorite/> : <MdFavoriteBorder/>}</span> */}
                 <Link to={"/recipe/"+recipe._id}>
                   <p>{recipe.title}</p>
                   <img src={`http://localhost:4000/static/${recipe.image.name}.jpeg`} alt={recipe.title}></img>

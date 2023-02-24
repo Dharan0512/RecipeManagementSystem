@@ -44,10 +44,10 @@ function Cuisine(props) {
 
  const toggleFavorite = (id)=>{
   if(favorties.includes(id)){
-    localStorage.removeItem("favorties",favorties[id])
+    localStorage.removeItem("cuiFav",favorties[id])
     setFavorites(favorties.filter(f=> f !== id));
   }else{
-    localStorage.setItem("favorties",[...favorties,id])
+    localStorage.setItem("cuiFav",[...favorties,id])
     setFavorites([...favorties,id])
   }
  } 

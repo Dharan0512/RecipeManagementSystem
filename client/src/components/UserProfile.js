@@ -31,11 +31,13 @@ console.log('value',isLogin,user);
       {isLogin ? <TbPizza/> :<TbPizzaOff/>}
       {isLogin ? (
         <Popup trigger={<Button>{user.name}</Button>} position="right center" className="red">
-        <Button>Favorites</Button>
+        <Link to={"/favourites"}>
+          <Button>Favorites</Button>
+        </Link>
         <Link to={"/addrecipe"}>
           <Button>Add Recipe</Button>
         </Link>
-        <Link to={"/ownrecipe"}>
+        <Link to={"/myrecipe"}>
           <Button>My Recipe</Button>
         </Link>
         <Link to={`/cart/${user._id}`}>

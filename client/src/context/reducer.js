@@ -8,15 +8,35 @@ import {
     REGISTER_USER_SUCCESS,
     TOGGLE_AMOUNT,
     ADD_TO_CART,
-    GET_TOTALS
+    GET_TOTALS,
+    IS_CARTED,
+    DISPLAY_ALERT,
+    CLEAR_ALERT
   } from "./action";
   
-  import { initialState } from "./appContext";
   
   const reducer = (state, action) => {
+
+     if (action.type === DISPLAY_ALERT) {
+    const { msg } = action.payload;
+    console.log(action);
+    return {
+      ...state,
+      showAlert: true,
+      alertType: "danger",
+      alertText: msg ? msg : "Please provide all values",
+    };
+  }
+  if (action.type === CLEAR_ALERT) {
+    return {
+      ...state,
+      showAlert: false,
+      alertType: "",
+      alertText: "",
+    };
+  }
+
     if (action.type === GET_FILTER_DATA) {
-      const { msg } = action.payload;
-      console.log("action", action);
       return {
         action,
       };
@@ -78,6 +98,14 @@ import {
     }
     
     //cart reducer
+  if(action.type === IS_CARTED){
+    console.log('red',action.payload);
+    
+    return {
+      ...state,
+      isActive: action.payload
+    }
+  }
   if (action.type === 'CLEAR_CART') {
     return { ...state, cart: [] }
   }
@@ -135,7 +163,6 @@ import {
   }
   //Add cart item TODO:
   if(action.type === ADD_TO_CART){
-    console.log('reducer');
     
     return{
       ...state,

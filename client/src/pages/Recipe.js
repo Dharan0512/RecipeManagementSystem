@@ -4,16 +4,24 @@ import { useParams } from "react-router-dom";
 import React from 'react'
 import axios from "axios";
 import { useAppContext } from "../context/appContext";
+import { initialState } from "../context/appContext";
 import {IoMdTimer} from "react-icons/io"
+
+
+
 function Recipe() {
   let params = useParams();
 
   const [details, setDetails] = useState({});
   const [html, setHtml] = useState({__html: ""})
   const [activeTab, setActiveTab] = useState("instructions")
-  const {addToCart} = useAppContext()
-
+  const [activeBut, setActiveBut] = useState(initialState)
+  const {addToCart, remove, isCarted} = useAppContext()
+  console.log('isActiveRecipe',activeBut);
+  
   const fetchDetails = async()=>{
+    console.log('hello');
+    
       // const check = localStorage.getItem('recipe')
       // const check = 0;
       // if(check){
@@ -35,7 +43,6 @@ function Recipe() {
         if(data.status === 200){
           detailData = await data.json()
           return setDetails(detailData)
-
         } 
         if(data.status === 404){
           
@@ -84,6 +91,10 @@ function Recipe() {
       }
     }
   }
+  const isCart = ()=>{
+    isCarted()
+    setActiveBut({ isActive: !activeBut.isActive})
+  }
 
   const addCart = async (recipe)=>{
     const {title,image,servings,pricePerServing} = recipe
@@ -103,7 +114,7 @@ function Recipe() {
     fetchDetails();
   },[]);
   
-console.log('extendedrecipe',details,details.readyInMinutes);
+console.log('extendedrecipe',details);
 
   return (
     <>
@@ -118,7 +129,12 @@ console.log('extendedrecipe',details,details.readyInMinutes);
           <IoMdTimer size={50}/>{'\u00A0'}
           <b className="fsize">{details.readyInMinutes}Mins</b>
           </span>
-          <Button className={"active"} onClick={()=>{addCart(details)}}>Add Cart</Button>
+          {/* TODO: carted button if uncarted remove from the cart too */}
+          {activeBut.isActive === false ? 
+          <Button className={"active"} onClick={()=>{addCart(details); isCart(true)}}>Add Cart</Button>
+          :
+          <Button className={"active"} onClick={()=>{remove(details.id); isCart(false)}}>Remove</Button>
+          }
          </Flex>
          <h2 className="label">Nutrition Label</h2>
          <b>Not Found...</b>
@@ -130,8 +146,7 @@ console.log('extendedrecipe',details,details.readyInMinutes);
           <div>
               {/* <ul>
               { details.instructions.map((ingredient)=>{
-                console.log("log",ingredient);
-                return  <li key={ingredient.id}>name:{ingredient.step}</li>
+                return  <li key={ingredient.id}>step{ingredient.step}</li>
               })}
             </ul> */}
           </div>
@@ -164,7 +179,11 @@ console.log('extendedrecipe',details,details.readyInMinutes);
           <IoMdTimer size={50}/>{'\u00A0'}
           <b className="fsize">{details.readyInMinutes}Mins</b>
           </span>
-          <Button className={"active"} onClick={()=>{addCart(details)}}>Add Cart</Button>
+          {activeBut.isActive === false ? 
+          <Button className={"active"} onClick={()=>{addCart(details); isCart()}}>Add Cart</Button>
+          :
+          <Button className={"active"} onClick={()=>{remove(details.id); isCart()}}>Remove</Button>
+          }
          </Flex>
         <h2 className="label">Nutrition Label</h2>
       <div dangerouslySetInnerHTML={html}/>

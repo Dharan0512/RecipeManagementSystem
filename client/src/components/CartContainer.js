@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAppContext } from '../context/appContext'
 import CartItem from './CartItem'
-
+import RazorPay from "../pages/RazorPay"
 const CartContainer = () => {
   const { cart, total, clearCart } = useAppContext()
   if (cart.length === 0) {
@@ -32,14 +32,14 @@ const CartContainer = () => {
         <hr />
         <div className='cart-total'>
           <h4>
-            total <span>{`\u20B9`}{total}</span>
+            total <span>{`\u20B9`}{Math.floor(total)}</span>
           </h4>
         </div>
         <button className='btn clear-btn' onClick={clearCart}>
           clear cart
         </button>
-        <button className='btn clear-btn' onClick={clearCart}>
-            Order Now
+        <button className='btn padpaybtn' >
+            <RazorPay paymentAmount={Math.floor(total)}/>
         </button>
       </footer>
     </section>

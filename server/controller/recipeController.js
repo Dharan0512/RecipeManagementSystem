@@ -9,20 +9,21 @@ import Recipe from "../models/Recipe.js";
 
 const addRecipe = async (req, res) => {
     const obj = JSON.parse(JSON.stringify(req.body));
-    console.log(req)
+    console.log(req.user)
     
     
      
     const {title, servings, pricePerServing, preparationInMin, instructions, ingredients} = obj;
     console.log({"objs":title, servings, pricePerServing, preparationInMin, instructions, ingredients });
     
+    if(!title ||  !instructions || !ingredients){
+        res.status(StatusCodes.BAD_REQUEST).json({msg: 'please provide all values'})
+        throw new BadRequestError('please provide all values')
+    }
     const name = req.file.originalname
     const type = req.file.mimetype
     const path = req.file.path
     
-    if(!title ||  !instructions || !ingredients){
-        throw new BadRequestError('please provide all values')
-    }
     // const parsedIngredient = JSON.parse(ingredients)
     
     const newRecipe = await recipe.create({
@@ -31,8 +32,8 @@ const addRecipe = async (req, res) => {
         pricePerServing: pricePerServing,
         readyInMinutes: preparationInMin,
         instructions: [...instructions],
-        ingredient: [...ingredients]
-        
+        original: [...ingredients],
+        author: req.user.userId
     });
     
     res.status(201).json({msg: "Recipe upload successfully"})
@@ -100,9 +101,22 @@ const deleteRecipe = async(req, res) => {
     const {id} = req.body;
     
     const recipe = await Recipe.delete({_id: id})
-
+    
     res.json({msg: "Deleted successfully" })
 }
 
+const userRecipe = async(req, res)=>{
+    console.log('req.user',req.user);
+    const {userId} = req.user
+    
+    const id = userId
+    const recipe = await Recipe.find({author: id })
+    if(!recipe){
+        res.status(StatusCodes.OK).json({msg: "nothing found"})
+    }
+    
+    res.json({msg: recipe})
+    
+}
 
-export {addRecipe, updateRecipe, deleteRecipe, singleRecipe, allRecipe}
+export {addRecipe, updateRecipe, deleteRecipe, singleRecipe, allRecipe, userRecipe}
