@@ -11,7 +11,8 @@ import {
     GET_TOTALS,
     IS_CARTED,
     DISPLAY_ALERT,
-    CLEAR_ALERT
+    CLEAR_ALERT,
+    DELETE_RECIPE
   } from "./action";
   
   
@@ -96,7 +97,12 @@ import {
         alertText: action.payload.msg,
       };
     }
-    
+  
+    if(action.type === DELETE_RECIPE){
+      return {
+        ...state,
+      }
+    }
     //cart reducer
   if(action.type === IS_CARTED){
     console.log('red',action.payload);

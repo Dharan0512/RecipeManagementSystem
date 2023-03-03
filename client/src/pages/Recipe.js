@@ -16,8 +16,8 @@ function Recipe() {
   const [html, setHtml] = useState({__html: ""})
   const [activeTab, setActiveTab] = useState("instructions")
   const [activeBut, setActiveBut] = useState(initialState)
-  const {addToCart, remove, isCarted} = useAppContext()
-  console.log('isActiveRecipe',activeBut);
+  const {addToCart, remove, isCarted, user} = useAppContext()
+  console.log('isActiveRecipe',activeBut,user);
   
   const fetchDetails = async()=>{
     console.log('hello');
@@ -144,9 +144,9 @@ console.log('extendedrecipe',details);
         <Button className={activeTab === "ingredients" ? "active": ""} onClick={()=>setActiveTab('ingredients')}>Ingredients</Button>
         {activeTab === "instructions" && (
           <div>
-              {/* <ul>
+            {/* <ul>
               { details.instructions.map((ingredient)=>{
-                return  <li key={ingredient.id}>step{ingredient.step}</li>
+                return  <li key={ingredient._id}>step{ingredient.step}</li>
               })}
             </ul> */}
           </div>
@@ -159,7 +159,7 @@ console.log('extendedrecipe',details);
             <ul>
               { details.extendedIngredients.map((ingredient)=>{
                 console.log("log",ingredient.original);
-                return  <li key={ingredient.id}>name:{ingredient.name}{ingredient.amount} metric:{ingredient.metric}</li>
+                return  <li key={ingredient.id}>{ingredient.name} - {ingredient.amount}  metric: {ingredient.metric}</li>
               })}
             </ul>
           </div>

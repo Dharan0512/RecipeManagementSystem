@@ -42,15 +42,15 @@ function Cuisine(props) {
         }
     };
 
- const toggleFavorite = (id)=>{
-  if(favorties.includes(id)){
-    localStorage.removeItem("cuiFav",favorties[id])
-    setFavorites(favorties.filter(f=> f !== id));
-  }else{
-    localStorage.setItem("cuiFav",[...favorties,id])
-    setFavorites([...favorties,id])
-  }
- } 
+//  const toggleFavorite = (id)=>{
+//   if(favorties.includes(id)){
+//     localStorage.removeItem("cuiFav",favorties[id])
+//     setFavorites(favorties.filter(f=> f !== id));
+//   }else{
+//     localStorage.setItem("cuiFav",[...favorties,id])
+//     setFavorites([...favorties,id])
+//   }
+//  } 
 
     useEffect(()=>{
         getCuisine(params.type)
@@ -75,7 +75,7 @@ function Cuisine(props) {
         {cuisine.map((item)=>{
             return(
                 <Card key={item.id}>
-                    <span onClick={()=>{toggleFavorite(item.id)}} className="fav">{favorties.includes(item.id) ? <MdFavorite/> : <MdFavoriteBorder/>}</span>
+                    {/* <span onClick={()=>{toggleFavorite(item.id)}} className="fav">{favorties.includes(item.id) ? <MdFavorite/> : <MdFavoriteBorder/>}</span> */}
                     <Link to={"/recipe/"+item.id}>
                     {/* <span className="fav"><MdFavoriteBorder/></span> */}
                     <img src={item.image} alt=""/> 

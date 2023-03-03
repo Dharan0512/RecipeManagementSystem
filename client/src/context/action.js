@@ -56,3 +56,5 @@ export const DISPLAY_ITEMS = 'DISPLAY_ITEMS'
 export const TOGGLE_AMOUNT = 'TOGGLE_AMOUNT'
 export const ADD_TO_CART = 'ADD_TO_CART'
 export const IS_CARTED = 'IS_CARTED'
+
+export const DELETE_RECIPE = 'DELETE_RECIPE'

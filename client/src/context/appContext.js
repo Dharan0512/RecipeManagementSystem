@@ -19,9 +19,10 @@ import {
   REGISTER_USER_ERROR,
   REGISTER_USER_SUCCESS,
   TOGGLE_AMOUNT,
-  IS_CARTED
+  IS_CARTED,
+  DELETE_RECIPE
 } from "./action";
-const url = 'https://course-api.com/react-useReducer-cart-project'
+// const url = 'https://course-api.com/react-useReducer-cart-project'
 const initialState = {
   //Filter data
   proteinValue: 0,
@@ -250,7 +251,15 @@ const setAuthCookies = (cookies)=>{
   const isCarted = ()=>{
     dispatch({type: IS_CARTED, payload: !state.isActive})
   }
-  
+
+  const deleteRecipe = async (id)=>{
+    dispatch({type: DELETE_RECIPE, payload: id})
+    try {
+     await authFetch.delete(`/recipe/${id}`) 
+    } catch (error) {
+      console.log('deleteRecipeerror',error);        
+    }
+  } 
 
   //favorites;
   useEffect(()=>{
@@ -278,7 +287,8 @@ const setAuthCookies = (cookies)=>{
         increase,
         decrease,
         toggleAmount,
-        isCarted
+        isCarted,
+        deleteRecipe
       }}
     >
       {children}

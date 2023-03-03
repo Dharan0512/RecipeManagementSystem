@@ -98,9 +98,9 @@ const allRecipe = async(req, res) => {
 
 //delete Recipe
 const deleteRecipe = async(req, res) => {
-    const {id} = req.body;
+    const {id} = req.params;
     
-    const recipe = await Recipe.delete({_id: id})
+    const recipe = await Recipe.findByIdAndDelete({_id: id})
     
     res.json({msg: "Deleted successfully" })
 }

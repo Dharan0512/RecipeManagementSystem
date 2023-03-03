@@ -6,6 +6,7 @@ import '@splidejs/splide/dist/css/splide.min.css'
 import { Link } from "react-router-dom";
 import {MdFavoriteBorder, MdFavorite} from "react-icons/md"
 import { useAppContext } from '../context/appContext';
+import {ImBin} from "react-icons/im"
 function MyRecipe() {
     const [veggie, setVeggie] = useState([]); //function allow to modify the variable
   const [favorties, setFavorites] = useState([])
@@ -20,11 +21,19 @@ function MyRecipe() {
       setVeggie(data.msg)
     
   }
+
+  const delRecipe = async (id)=>{
+    const api = await fetch(`http://localhost:4000/api/v1/recipe/myrecipe/${id}`,{method: 'DELETE'})
+    const data = await api.json();
+
+    console.log('delete');
+    getVeggie()
+    
+  }
   useEffect(()=>{
    getVeggie();
   },[])
-
-  
+ 
   return (
     <div>
         <Wrapper>
@@ -40,6 +49,7 @@ function MyRecipe() {
             return(
               <SplideSlide key={recipe._id}>
                 <Card>
+                <span onClick={()=>{delRecipe(recipe._id)}} className="fav">{<ImBin/>}</span>
                 <Link to={"/recipe/"+recipe._id}>
                   <p>{recipe.title}</p>
                   <img src={`http://localhost:4000/static/${recipe.image.name}.jpeg`} alt={recipe.title}></img>

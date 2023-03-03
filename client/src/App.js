@@ -18,8 +18,9 @@ import CartContainer from "./components/CartContainer";
 import { useAppContext } from "./context/appContext";
 import { useEffect } from "react";
 import RazorPay from "./pages/RazorPay"
-import Favourites from "./pages/Favourites";
+// import Favourites from "./pages/Favourites";
 import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
   const url = window.location.pathname
   const {setAuthCookies} = useAppContext()
@@ -39,17 +40,17 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/cuisine/:type" element={<Cuisine />} />
               <Route path="/searched/:search" element={<Searched />} />
-              <Route path="/addrecipe" element={<EppRecipe />} />
-              <Route path="/cart/:id" element={<CartContainer />} />
               <Route path="/recipe/:name" element={<Recipe />} />
               <Route path="/myrecipe" element={<MyRecipe />} />
-              <Route path="/favourites" element={<Favourites/>} />
+              <Route path="/addrecipe" element={<EppRecipe />} />
+              <Route path="/cart/:id" element={<CartContainer />} />
+              {/* <Route path="/favourites" element={<Favourites/>} /> */}
             </Route>
               {/* <Route path="/userrecipe/:name" element={<URecipe/>}/> */}
             <Route path="/register" element={<Register />} />
             <Route path="/razorpay" element={<RazorPay />} />
           </Routes>
-          {/* <ToastContainer/> */}
+          <ToastContainer/>
         </BrowserRouter>
       </AnimatePresence>
     </div>

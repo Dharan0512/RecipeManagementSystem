@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import Wrapper from "../assets/wrappers/AddRecipe"
 import { useAppContext } from '../context/appContext';
+import { toast } from 'react-toastify';
 function EppRecipe() {
      const [title, setTitle] = useState("");
     const [image, setImage] = useState(null);
@@ -113,8 +114,10 @@ function EppRecipe() {
           headers: {'Authorization': `Bearer ${token}`}
         }, config)  .then((response) => response.json())
         .then((data) => {
+          toast.success("Recipe Upload Successful",{
+            position: toast.POSITION.TOP_RIGHT
+          })
           console.log("Form submitted successfully!");
-          console.log(data);
         })
         .catch((error) => {
           console.error("Form submission failed:", error);
@@ -225,6 +228,7 @@ function EppRecipe() {
                 <option value="teaspoon">Teaspoon</option>
                 <option value="bowl">Bowl</option>
                 <option value="ml">ml</option>
+                <option value="cup">cup</option>
                 <option value="miligram">mg</option>
             </select>
             {

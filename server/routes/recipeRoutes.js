@@ -31,8 +31,8 @@ router.route('/upload').post(auth,upload.single('image'),addRecipe)
     //get all recipe
 router.route('/').get(allRecipe)
 router.route('/myrecipe').get(auth,userRecipe)
-
+router.route('/myrecipe/:id').delete(deleteRecipe)
     //get single recipe, update recipe, 
-router.route('/:id').get(singleRecipe).patch(upload.single('image'),updateRecipe).delete(deleteRecipe)
+router.route('/:id').get(singleRecipe).patch(upload.single('image'),updateRecipe)
 
 export default router;
